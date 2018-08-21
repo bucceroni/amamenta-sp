@@ -1,0 +1,7 @@
+organization=bucceroni-github
+projectKey=amamenta-sp
+serverUrl=https://sonarcloud.io
+serverVersion=7.3.0.15267
+dashboardUrl=https://sonarcloud.io/dashboard?id=amamenta-sp
+ceTaskId=AWVdKJYqVuLyJ-7gjPSX
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AWVdKJYqVuLyJ-7gjPSX
