@@ -24,3 +24,7 @@ yarn-error.log*
 #Sonar Cloud
 /.scannerwork
 sonar-project.properties
+
+#README
+README_PGP.md
+README_CREATE_REACT_APP.md
