@@ -14,7 +14,7 @@ class Home extends Component {
     return (
       <div>
         <Typography variant="display1" gutterBottom>
-          Home Page
+          POC - PGPnoMore
         </Typography>
       </div>
     );

@@ -18,7 +18,7 @@ Projeto de conclusão de curso
 
   - Projeto iniciado com [create-react-app](https://github.com/facebook/create-react-app)
 
-  - Dependencias
+  - Dependências
     - Material UI - `npm install @material-ui/core`
     - Material Icon - `npm install @material-ui/icons`
     - React Router - `npm install react-router-dom`
@@ -45,7 +45,9 @@ Projeto de conclusão de curso
 
 <hr>
 
-## Inicie o Projeto Local
+## Iniciar projeto
+
+### Local
 
 - Clone o repositório (Terminal)
 
@@ -60,7 +62,7 @@ Projeto de conclusão de curso
 
 <hr>
 
-## Deploy
+### Web
 
 - Heroku
   - Aplicação disponível em:

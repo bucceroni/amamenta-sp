@@ -42,7 +42,8 @@ class Template extends React.Component {
     return (
       <div className={classes.root}>
         <AppBar
-          position="absolute"
+          // position="absolute"
+          position="fixed"
           className={classNames(
             classes.appBar,
             this.state.open && classes.appBarShift

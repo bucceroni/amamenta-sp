@@ -1,14 +1,23 @@
-// import api from "./api";
-// import * as types from "./types";
+import api from "../api";
+import * as types from "./types";
 
-// export function getPosts() {
-//   return async dispatch => {
-//     dispatch({
-//       type: types.GET_POSTS,
-//       payload: await api.getPosts()
-//     });
-//   };
-// }
+export function getUsers() {
+  return async dispatch => {
+    dispatch({
+      type: types.GET_USERS,
+      payload: await api.getUsers()
+    });
+  };
+}
+
+export function addUser(name, nickname) {
+  return async dispatch => {
+    dispatch({
+      type: types.ADD_USER,
+      payload: await api.addUser(name, nickname)
+    });
+  };
+}
 
 // export function incrementVoteScore(id) {
 //   const vote = "upVote";
