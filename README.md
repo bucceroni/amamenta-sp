@@ -31,7 +31,7 @@ Projeto de conclusão de curso
 
 - Back
 
-  - API disponibilizada .... (Python -> AWS)
+  - API disponibilizada .... (Python/Flask -> AWS)
 
 <hr >
 
