@@ -1,5 +1,4 @@
-// export const GET_USERS = "GET_USERS";
-// export const ADD_USER = "ADD_USER";
+// export const GET_POSTS = "GET_POSTS";
 // export const INCREMENT_VOTE_SCORE = "INCREMENT_VOTE_SCORE";
 // export const DECREMENT_VOTE_SCORE = "DECREMENT_VOTE_SCORE";
 // export const GET_CATEGORIES = "GET_CATEGORIES";

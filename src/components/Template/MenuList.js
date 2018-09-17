@@ -10,8 +10,9 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import HomeIcon from "@material-ui/icons/Home";
-import MoveToInboxIcon from "@material-ui/icons/MoveToInbox";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import PregnantWomanIcon from "@material-ui/icons/PregnantWoman";
+import BusinessIcon from "@material-ui/icons/Business";
 
 import styles from "./styles";
 
@@ -23,25 +24,32 @@ class MenuList extends React.Component {
       <React.Fragment>
         <CssBaseline />
         <List>
-          <ListItem button component={Link} to="/">
+          <ListItem button={true} component={Link} to="/">
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
             <ListItemText className={classes.iconText} primary="Home" />
           </ListItem>
 
-          <ListItem button component={Link} to="/login">
+          <ListItem button={true} component={Link} to="/localize">
             <ListItemIcon>
-              <AccountCircleIcon />
+              <LocationOnIcon />
             </ListItemIcon>
-            <ListItemText primary="Login" />
+            <ListItemText className={classes.iconText} primary="Localizar" />
           </ListItem>
 
-          <ListItem button component={Link} to="/user">
+          <ListItem button={true} component={Link} to="/user">
             <ListItemIcon>
-              <MoveToInboxIcon />
+              <PregnantWomanIcon />
             </ListItemIcon>
-            <ListItemText primary="POC" />
+            <ListItemText className={classes.iconText} primary="Doador" />
+          </ListItem>
+
+          <ListItem button={true} component={Link} to="/institution">
+            <ListItemIcon>
+              <BusinessIcon />
+            </ListItemIcon>
+            <ListItemText className={classes.iconText} primary="Instituição" />
           </ListItem>
         </List>
       </React.Fragment>

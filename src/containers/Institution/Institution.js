@@ -8,29 +8,27 @@ import * as actions from "./actions";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-
 import styles from "./styles";
 
-class User extends Component {
+class Institution extends Component {
   state = {};
-
 
   render() {
     return (
       <div>
         <Typography variant="display1" gutterBottom>
-          Usuário - Doador
+          Instituição
         </Typography>
       </div>
     );
   }
 }
 
-User.propTypes = {}
+Institution.propTypes = {};
 
 const mapStateToProps = state => {
   return {
-    ...state.user
+    ...state.institution
   };
 };
 
@@ -48,4 +46,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(User));
+)(withStyles(styles, { withTheme: true })(Institution));

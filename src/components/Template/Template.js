@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { Link } from "react-router-dom";
+
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -14,6 +16,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
 import Badge from "@material-ui/core/Badge";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 
 import styles from "./styles";
@@ -69,11 +72,16 @@ class Template extends React.Component {
               >
                 Amamenta-SP
               </Typography>
+
               {/* <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
+                <Badge badgeContent={4} disabled color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton> */}
+
+              <IconButton color="inherit" component={Link} to="/login">
+                <AccountCircleIcon />
+              </IconButton>
             </Toolbar>
           </AppBar>
           <Drawer
