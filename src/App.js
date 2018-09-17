@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Template from "./components/Template/Template";
 import Home from "./containers/Home/Home";
-import Login from "./components/Login/Login";
+import Login from "./containers/Login/Login";
 import User from "./containers/User/User";
 import Localize from "./containers/Localize/Localize";
 import Institution from "./containers/Institution/Institution";
