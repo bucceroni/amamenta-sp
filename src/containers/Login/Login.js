@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +11,8 @@ import LockIcon from '@material-ui/icons/LockOutline';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+
+import { Link } from "react-router-dom";
 
 import styles from "./styles"
 
@@ -24,14 +27,14 @@ function Login(props) {
           <Avatar className={classes.avatar}>
             <LockIcon />
           </Avatar>
-          <Typography variant="headline">Sign in</Typography>
+          <Typography variant="headline">Login</Typography>
           <form className={classes.form}>
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
+              <InputLabel htmlFor="email">Email</InputLabel>
               <Input id="email" name="email" autoComplete="email" autoFocus />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
+              <InputLabel htmlFor="password">Senha</InputLabel>
               <Input
                 name="password"
                 type="password"
@@ -46,8 +49,14 @@ function Login(props) {
               color="primary"
               className={classes.submit}
             >
-              Sign in
+              Entrar
             </Button>
+
+            
+                 <Button color="primary" component={Link} to="/register">
+                      Cadastre-se
+                    </Button>
+         
           </form>
         </Paper>
       </main>

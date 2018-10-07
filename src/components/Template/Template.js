@@ -3,9 +3,12 @@ import PropTypes from "prop-types";
 
 import { Link } from "react-router-dom";
 
+import MenuList from "./MenuList";
+
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Grid from "@material-ui/core/Grid";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -14,13 +17,10 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-
+import InputIcon from "@material-ui/icons/Input";
 import Badge from "@material-ui/core/Badge";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 
 import styles from "./styles";
-import MenuList from "./MenuList";
 
 class Template extends React.Component {
   state = {
@@ -64,24 +64,30 @@ class Template extends React.Component {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography
-                variant="title"
-                color="inherit"
-                noWrap
-                className={classes.title}
+              <Grid
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="center"
               >
-                Amamenta-SP
-              </Typography>
+                <Typography
+                  variant="title"
+                  color="inherit"
+                  noWrap
+                  className={classes.title}
+                >
+                  Amamenta-SP
+                </Typography>
 
-              {/* <IconButton color="inherit">
-                <Badge badgeContent={4} disabled color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton> */}
-
-              <IconButton color="inherit" component={Link} to="/login">
-                <AccountCircleIcon />
+                <Grid item>
+                <IconButton color="inherit"  component={Link}
+                    to="/login">
+                {/* <Badge badgeContent={"Entrar"}> */}
+                  <InputIcon />
+                {/* </Badge> */}
               </IconButton>
+                </Grid>
+              </Grid>
             </Toolbar>
           </AppBar>
           <Drawer

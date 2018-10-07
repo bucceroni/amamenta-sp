@@ -28,9 +28,6 @@ sonar-project.properties
 #Gource
 /gource
 
-#Swagger
-swagger.yaml
-
 #README
 README_PGP.md
 README_CREATE_REACT_APP.md

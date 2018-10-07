@@ -71,6 +71,12 @@ const styles = theme => ({
   },
   tableContainer: {
     height: 320
+  },
+  margin: {
+    margin: theme.spacing.unit
+  },
+  button: {
+    color: "#3F51B5"
   }
 });
 export default styles;
