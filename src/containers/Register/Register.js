@@ -4,17 +4,29 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import FormControl from "@material-ui/core/FormControl";
-import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
-import LockIcon from "@material-ui/icons/LockOutline";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import styles from "./styles";
 
 class Register extends Component {
+  state = {
+    city_id: null,
+    email: "",
+    password: "",
+    name: "",
+    nickname: "",
+    gender: "",
+    street: "",
+    number: "",
+    role_id: null,
+    complement: "",
+    district: "",
+    phone: [],
+    postal_code: ""
+  }
   render() {
     const { classes } = this.props;
 
@@ -23,7 +35,7 @@ class Register extends Component {
         <CssBaseline />
 
         <Avatar className={classes.avatar}>
-          👶
+          <span role="img" aria-label="aria-label">👶</span>
         </Avatar>
         <Typography variant="headline">Cadastre-se</Typography>
         <form className={classes.form}>
@@ -33,7 +45,12 @@ class Register extends Component {
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="nickname">Apelido</InputLabel>
-            <Input id="nickname" name="nickname" autoComplete="nickname" autoFocus />
+            <Input
+              id="nickname"
+              name="nickname"
+              autoComplete="nickname"
+              autoFocus
+            />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="gender">Gênero</InputLabel>
@@ -45,7 +62,12 @@ class Register extends Component {
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="city-id">Cidade</InputLabel>
-            <Input id="city-id" name="city-id" autoComplete="city-id" autoFocus />
+            <Input
+              id="city-id"
+              name="city-id"
+              autoComplete="city-id"
+              autoFocus
+            />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="street">Rua</InputLabel>
@@ -57,22 +79,36 @@ class Register extends Component {
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="complement">Complemento</InputLabel>
-            <Input id="complement" name="complement" autoComplete="complement" autoFocus />
+            <Input
+              id="complement"
+              name="complement"
+              autoComplete="complement"
+              autoFocus
+            />
           </FormControl>
-  
-          
+
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="district">Bairro</InputLabel>
-            <Input id="district" name="district" autoComplete="district" autoFocus />
+            <Input
+              id="district"
+              name="district"
+              autoComplete="district"
+              autoFocus
+            />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="postal-code">CEP</InputLabel>
-            <Input id="postal-code" name="postal-code" autoComplete="postal-code" autoFocus />
+            <Input
+              id="postal-code"
+              name="postal-code"
+              autoComplete="postal-code"
+              autoFocus
+            />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email</InputLabel>
-              <Input id="email" name="email" autoComplete="email" autoFocus />
-            </FormControl>
+            <InputLabel htmlFor="email">Email</InputLabel>
+            <Input id="email" name="email" autoComplete="email" autoFocus />
+          </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Senha</InputLabel>
             <Input

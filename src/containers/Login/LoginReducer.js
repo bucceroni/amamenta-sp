@@ -1,17 +1,24 @@
 import * as types from "./actions/types";
 
 const initialState = {
-    institutions: [],
+  user: {},
+  login: false,
+  message: ""
 };
 
 export default function reduce(state = initialState, action) {
-    const { type, payload } = action
+  const { type, payload } = action;
 
   switch (type) {
-      case `${types.GET_INSTITUTIONS}`:
+    case `${types.LOGIN}`:
       return {
         ...state,
-        institutions: payload
+        ...payload,
+      };
+    case `${types.LOGOUT}`:
+      return {
+        ...state,
+        login: false
       };
     default:
       return state;

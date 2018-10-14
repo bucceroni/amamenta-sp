@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -12,8 +12,6 @@ import Typography from "@material-ui/core/Typography";
 import styles from "./styles";
 
 class User extends Component {
-  state = {};
-
 
   render() {
     return (
@@ -26,7 +24,6 @@ class User extends Component {
   }
 }
 
-User.propTypes = {}
 
 const mapStateToProps = state => {
   return {

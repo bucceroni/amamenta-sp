@@ -1,11 +1,11 @@
 // import api from "./api";
 // import * as types from "./types";
 
-// export function getPosts() {
+// export function getStatess() {
 //   return async dispatch => {
 //     dispatch({
-//       type: types.GET_POSTS,
-//       payload: await api.getPosts()
+//       type: types.GET_STATES,
+//       payload: await api.getStates()
 //     });
 //   };
 // }

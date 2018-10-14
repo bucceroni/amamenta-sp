@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -24,7 +24,7 @@ class Institution extends Component {
   }
 }
 
-Institution.propTypes = {};
+
 
 const mapStateToProps = state => {
   return {

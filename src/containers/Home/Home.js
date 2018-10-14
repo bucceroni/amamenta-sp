@@ -1,30 +1,22 @@
-// import React, { Component } from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "./actions";
 
-// import { withStyles } from "@material-ui/core/styles";
-// import { Typography } from "@material-ui/core";
-
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 import classNames from "classnames";
-import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
-import CameraIcon from "@material-ui/icons/PhotoCamera";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
 
 import styles from "./styles";
-
 class Home extends Component {
   render() {
     const { classes } = this.props;
@@ -62,13 +54,18 @@ class Home extends Component {
                       Registre-se
                     </Button>
                   </Grid>
-                
                 </Grid>
               </div>
             </div>
           </div>
           <div className={classNames(classes.layout, classes.cardGrid)}>
-            <Grid container spacing={40} direction="row"  justify="space-between"  alignItems="center">
+            <Grid
+              container
+              spacing={40}
+              direction="row"
+              justify="space-between"
+              alignItems="center"
+            >
               {cards.map(card => (
                 <Grid item key={card} sm={6} md={4} lg={3}>
                   <Card className={classes.card}>
@@ -94,7 +91,6 @@ class Home extends Component {
                       <Button size="small" color="primary">
                         View
                       </Button>
-                    
                     </CardActions>
                   </Card>
                 </Grid>
@@ -108,7 +104,8 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  actions: PropTypes.object
 };
 
 const mapStateToProps = state => {
