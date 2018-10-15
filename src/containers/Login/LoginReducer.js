@@ -3,7 +3,8 @@ import * as types from "./actions/types";
 const initialState = {
   user: {},
   login: false,
-  message: ""
+  message: "",
+  openSnackbar: false,
 };
 
 export default function reduce(state = initialState, action) {
@@ -14,6 +15,11 @@ export default function reduce(state = initialState, action) {
       return {
         ...state,
         ...payload,
+      };
+    case `${types.CLOSE_SNACKBAR}`:
+      return {
+        ...state,
+        openSnackbar: payload,
       };
     case `${types.LOGOUT}`:
       return {

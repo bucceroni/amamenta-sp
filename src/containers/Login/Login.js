@@ -12,6 +12,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import LockIcon from "@material-ui/icons/LockOutline";
 import Paper from "@material-ui/core/Paper";
+import Snackbar from "@material-ui/core/Snackbar";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -20,29 +21,36 @@ import styles from "./styles";
 class Login extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    vertical: "bottom",
+    horizontal: "center",
   };
 
   handleSubmit = () => {
     const { email, password } = this.state;
     const { actions } = this.props;
     actions.login(email, password);
-  
   };
 
   handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
   };
 
-  render() {
-    const { classes } = this.props;
-    const { email, password } = this.state;
-
+  handleCloseSnackbar = () => {
+    const { actions } = this.props;
     const { history, login } = this.props;
-    if (login) {
+    actions.closeSnackbar();
+
+    if(login) {
       history.push("/user");
     }
+  };
 
+  render() {
+    const { classes, message, openSnackbar } = this.props;
+    const { email, password, vertical, horizontal } = this.state;
+
+    
     return (
       <React.Fragment>
         <CssBaseline />
@@ -98,7 +106,17 @@ class Login extends Component {
             </form>
           </Paper>
         </main>
-      </React.Fragment>
+       <Snackbar
+       anchorOrigin={{ vertical, horizontal }}
+       open={openSnackbar}
+       autoHideDuration={2000}
+       onClose={this.handleCloseSnackbar}
+       ContentProps={{
+         "aria-describedby": "message-id"
+        }}
+        message={<span id="message-id">{message}</span>}
+        />
+        </React.Fragment>
     );
   }
 }
@@ -106,13 +124,18 @@ class Login extends Component {
 Login.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.object,
-  user: PropTypes.object
+  user: PropTypes.object,
+  login: PropTypes.bool,
+  message: PropTypes.string,
+  openSnackbar: PropTypes.bool
 };
 
 const mapStateToProps = state => {
   return {
     user: state.login.user,
-    login: state.login.login
+    login: state.login.login,
+    message: state.login.message,
+    openSnackbar: state.login.openSnackbar
   };
 };
 

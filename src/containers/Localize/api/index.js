@@ -6,7 +6,6 @@ const api =
   const headers = {
     Accept: "application/json",
     "content-type": "application/json",
-    "Access-Control-Allow-Origin": "*"
   };
 class Api {
   static async getInstitutions() {

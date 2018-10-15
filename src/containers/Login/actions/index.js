@@ -6,21 +6,32 @@ export function login(email, password) {
     let user 
     let login
     let message
+    let openSnackbar
 
     const res = await api.login(email, password)
     if(res.data === ""){
       user = {}
       login = false
+      openSnackbar = true
       message = "Usuário ou senha inválido"
     }else{
       user = res.data
       login = true
+      openSnackbar = true
       message = "Login realizado com sucesso"
     }
     dispatch({
       type: types.LOGIN,
-      payload: {user, login, message}
+      payload: {user, login, message, openSnackbar}
     });
+  };
+}
+
+export function closeSnackbar() {
+  return async dispatch => {
+    dispatch({
+      type: types.CLOSE_SNACKBAR,
+      payload: false    });
   };
 }
 

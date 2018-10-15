@@ -5,7 +5,6 @@ const api = "https://u34n1y2e6l.execute-api.us-east-2.amazonaws.com/prod";
 const headers = {
   Accept: "application/json",
   "content-type": "application/json",
-  "Access-Control-Allow-Origin": "*"
 };
 
 class Api {
