@@ -5,7 +5,6 @@ const api = "https://u34n1y2e6l.execute-api.us-east-2.amazonaws.com/prod";
 const headers = {
   Accept: "application/json",
   "Content-type": "application/json",
-  // 'Access-Control-Allow-Origin': "*",
 };
 
 class Api {
@@ -14,24 +13,24 @@ class Api {
       `${api}/login`,
       { email: email, password: password },
       { headers }
-    )//.then(res=> res).catch(error =>  error)
+    ).then(res=> res).catch(error =>  error)
     if (res.status >= 200 && res.status <= 207) {
       return res.data;
     } else {
-      throw new Error(`HTTP status ${res.status}`);
+      return res.response
     }
   }
   
-  static async logout(id, token) {
-    const res = await axios.post(
+  static async logout(token) {
+    const res = await axios.get(
       `${api}/logout`,
-      { id: id, token: token },
+      { token: token },
       { headers }
-    );
+    ).then(res=> res).catch(error =>  error)
     if (res.status >= 200 && res.status <= 207) {
       return res.data;
     } else {
-      throw new Error(`HTTP status ${res.status}`);
+      return res.response
     }
   }
 }

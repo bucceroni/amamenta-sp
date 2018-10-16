@@ -21,7 +21,7 @@ class Api {
   static async getCities(state_id) {
     const res = await axios.get(
       `${api}/cities`,
-      { "state-id": state_id },
+      {"state-id": state_id },
       { headers }
     )
     if (res.status >= 200 && res.status <= 207) {

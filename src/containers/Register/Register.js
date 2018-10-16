@@ -62,6 +62,7 @@ const styles = theme => ({
 
 class Register extends Component {
   state = {
+    state_id:"",
     city_id: "",
     email: "",
     password: "",
@@ -100,7 +101,7 @@ class Register extends Component {
       email,
       password
     } = this.state;
-    const { actions } = this.props;
+    const { actions} = this.props;
     actions.addUser(
       name,
       nickname,
@@ -119,11 +120,11 @@ class Register extends Component {
     );
   };
 
-  handleChangeSelectStates = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
   handleChange = prop => event => {
+    if(prop === "state_id"){
+      const {actions} = this.props
+      actions.getCities(event.target.value)
+    }
     this.setState({ [prop]: event.target.value });
   };
 
@@ -134,6 +135,7 @@ class Register extends Component {
       birth_date,
       gender,
       city_id,
+      state_id,
       street,
       number,
       complement,
@@ -145,9 +147,9 @@ class Register extends Component {
       password
     } = this.state;
     const {
-      classes
-      // states,
-      // cities,
+      classes,
+      states,
+      cities
     } = this.props;
 
     return (
@@ -209,31 +211,32 @@ class Register extends Component {
                 onChange={this.handleChange("gender")}
               />
               <Select
-                value={this.state.age}
-                onChange={this.handleChange}
+                value={state_id}
+                onChange={this.handleChange("state_id")}
                 inputProps={{
-                  name: "age",
-                  id: "age-simple"
+                  name: "state_id"
                 }}
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {states.map((item, index) => {
+                  return(
+                    <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
+                  )
+                })}  
               </Select>
-              <TextField
-                fullWidth
-                label="Cidade e Estado"
-                className={classes.textField}
-                type="number"
-                name="city_id"
-                margin="normal"
-                variant="outlined"
+              <Select
+              disabled={false}
                 value={city_id}
                 onChange={this.handleChange("city_id")}
-              />
+                inputProps={{
+                  name: "city_id"
+                }}
+              >
+                {cities.map((item, index) => {
+                  return(
+                    <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
+                  )
+                })}  
+              </Select>
               <TextField
                 fullWidth
                 label="Rua"

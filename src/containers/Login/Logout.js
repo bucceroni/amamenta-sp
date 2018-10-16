@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -9,7 +8,6 @@ import * as actions from "./actions";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
 import LockIcon from "@material-ui/icons/LockOutline";
 import Paper from "@material-ui/core/Paper";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -38,7 +36,7 @@ const styles = theme => ({
   },
   avatar: {
     margin: theme.spacing.unit,
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.secondary.main
   },
   form: {
     width: "100%", // Fix IE11 issue.
@@ -49,29 +47,15 @@ const styles = theme => ({
   }
 });
 
-class Login extends Component {
+class Logout extends Component {
   state = {
-    email: "",
-    password: "",
     vertical: "bottom",
     horizontal: "center"
   };
 
-  componentDidMount(){
-    const {history, login} = this.props
-      if (login) {
-        history.push("/logout");
-      }
-  }
-
   handleSubmit = () => {
-    const { email, password } = this.state;
-    const { actions } = this.props;
-    actions.login(email, password);
-  };
-
-  handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
+    const { actions, user } = this.props;
+    actions.logout(user.token);
   };
 
   handleCloseSnackbar = () => {
@@ -79,23 +63,14 @@ class Login extends Component {
     const { history, login } = this.props;
     actions.closeSnackbar();
 
-    if (login) {
-      this.setState({
-        email: "",
-        password: ""
-      });
-      history.push("/user");
-    } else {
-      this.setState({
-        email: "",
-        password: ""
-      });
+    if (!login) {
+      history.push("/");
     }
   };
 
   render() {
-    const { classes, message, openSnackbar } = this.props;
-    const { email, password, vertical, horizontal } = this.state;
+    const { classes, openSnackbar, message, user } = this.props;
+    const { vertical, horizontal } = this.state;
 
     return (
       <React.Fragment>
@@ -106,48 +81,18 @@ class Login extends Component {
             <Avatar className={classes.avatar}>
               <LockIcon />
             </Avatar>
-            <Typography variant="headline">Login</Typography>
+            <Typography variant="headline">Logout</Typography>
 
             <form className={classes.container} noValidate autoComplete="off">
-              <TextField
-                fullWidth
-                id="outlined-email-input"
-                label="Email"
-                className={classes.textField}
-                type="email"
-                name="email"
-                autoComplete="email"
-                margin="normal"
-                variant="outlined"
-                value={email}
-                onChange={this.handleChange("email")}
-              />
-              <TextField
-                fullWidth
-                id="outlined-password-input"
-                label="Senha"
-                className={classes.textField}
-                type="password"
-                autoComplete="current-password"
-                margin="normal"
-                variant="outlined"
-                value={password}
-                onChange={this.handleChange("password")}
-              />
-
+              <Typography>{user.nickname}, deseja sair?</Typography>
               <Button
                 fullWidth
                 variant="raised"
                 color="primary"
                 className={classes.submit}
-                disabled={email && password ? false : true}
                 onClick={this.handleSubmit}
               >
-                Entrar
-              </Button>
-
-              <Button color="primary" fullWidth component={Link} to="/register">
-                Cadastre-se
+                Sair
               </Button>
             </form>
           </Paper>
@@ -160,14 +105,14 @@ class Login extends Component {
           ContentProps={{
             "aria-describedby": "message-id"
           }}
-          message={<span id="message-id">{message}</span>}
+          message={<span id="message-id">{message }</span>}
         />
       </React.Fragment>
     );
   }
 }
 
-Login.propTypes = {
+Logout.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.object,
   user: PropTypes.object,
@@ -199,4 +144,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Login));
+)(withStyles(styles)(Logout));

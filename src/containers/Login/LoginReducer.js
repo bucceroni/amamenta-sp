@@ -24,7 +24,7 @@ export default function reduce(state = initialState, action) {
     case `${types.LOGOUT}`:
       return {
         ...state,
-        login: false
+        ...payload,
       };
     default:
       return state;
