@@ -15,7 +15,7 @@ export function login(email, password) {
       openSnackbar = true
       message = "Usuário ou senha inválido"
     }else{
-      user = res.data
+      user = res
       login = true
       openSnackbar = true
       message = "Login realizado com sucesso"

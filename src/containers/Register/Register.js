@@ -1,19 +1,68 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as actions from "./actions";
+
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import FormControl from "@material-ui/core/FormControl";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
+import TextField from "@material-ui/core/TextField";
+import Paper from "@material-ui/core/Paper";
+// import Snackbar from "@material-ui/core/Snackbar";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
-import styles from "./styles";
+const styles = theme => ({
+  layout: {
+    width: "auto",
+    display: "block", // Fix IE11 issue.
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      width: 400,
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
+  },
+  paper: {
+    marginTop: theme.spacing.unit * 8,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
+      .spacing.unit * 3}px`
+  },
+  avatar: {
+    margin: theme.spacing.unit,
+    backgroundColor: theme.palette.primary.main
+  },
+  form: {
+    width: "100%", // Fix IE11 issue.
+    marginTop: theme.spacing.unit
+  },
+  submit: {
+    marginTop: theme.spacing.unit * 3
+  },
+  root: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120
+  },
+  selectEmpty: {
+    marginTop: theme.spacing.unit * 2
+  }
+});
 
 class Register extends Component {
   state = {
-    city_id: null,
+    city_id: "",
     email: "",
     password: "",
     name: "",
@@ -21,120 +70,341 @@ class Register extends Component {
     gender: "",
     street: "",
     number: "",
-    role_id: null,
+    role_id: "",
     complement: "",
     district: "",
+    postal_code: "",
     phone: [],
-    postal_code: ""
+    birth_date: ""
+  };
+
+  componentDidMount() {
+    const { actions } = this.props;
+    actions.getStates();
   }
+
+  handleSubmit = () => {
+    const {
+      name,
+      nickname,
+      birth_date,
+      gender,
+      city_id,
+      street,
+      number,
+      complement,
+      district,
+      postal_code,
+      phone,
+      role_id,
+      email,
+      password
+    } = this.state;
+    const { actions } = this.props;
+    actions.addUser(
+      name,
+      nickname,
+      birth_date,
+      gender,
+      city_id,
+      street,
+      number,
+      complement,
+      district,
+      postal_code,
+      phone,
+      role_id,
+      email,
+      password
+    );
+  };
+
+  handleChangeSelectStates = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleChange = prop => event => {
+    this.setState({ [prop]: event.target.value });
+  };
+
   render() {
-    const { classes } = this.props;
+    const {
+      name,
+      nickname,
+      birth_date,
+      gender,
+      city_id,
+      street,
+      number,
+      complement,
+      district,
+      postal_code,
+      phone,
+      role_id,
+      email,
+      password
+    } = this.state;
+    const {
+      classes
+      // states,
+      // cities,
+    } = this.props;
 
     return (
       <React.Fragment>
         <CssBaseline />
 
-        <Avatar className={classes.avatar}>
-          <span role="img" aria-label="aria-label">👶</span>
-        </Avatar>
-        <Typography variant="headline">Cadastre-se</Typography>
-        <form className={classes.form}>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="name">Nome completo</InputLabel>
-            <Input id="name" name="name" autoComplete="name" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="nickname">Apelido</InputLabel>
-            <Input
-              id="nickname"
-              name="nickname"
-              autoComplete="nickname"
-              autoFocus
-            />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="gender">Gênero</InputLabel>
-            <Input id="gender" name="gender" autoComplete="gender" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="state">Estado</InputLabel>
-            <Input id="state" name="state" autoComplete="state" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="city-id">Cidade</InputLabel>
-            <Input
-              id="city-id"
-              name="city-id"
-              autoComplete="city-id"
-              autoFocus
-            />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="street">Rua</InputLabel>
-            <Input id="street" name="street" autoComplete="street" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="number">Número</InputLabel>
-            <Input id="number" name="number" autoComplete="number" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="complement">Complemento</InputLabel>
-            <Input
-              id="complement"
-              name="complement"
-              autoComplete="complement"
-              autoFocus
-            />
-          </FormControl>
+        <main className={classes.layout}>
+          <Paper className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <span role="img" aria-label="aria-label">
+                👶
+              </span>
+            </Avatar>
+            <Typography variant="headline">Cadastre-se</Typography>
 
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="district">Bairro</InputLabel>
-            <Input
-              id="district"
-              name="district"
-              autoComplete="district"
-              autoFocus
-            />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="postal-code">CEP</InputLabel>
-            <Input
-              id="postal-code"
-              name="postal-code"
-              autoComplete="postal-code"
-              autoFocus
-            />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Senha</InputLabel>
-            <Input
-              name="password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-          </FormControl>
-          <Button
-            type="submit"
-            fullWidth
-            variant="raised"
-            color="primary"
-            className={classes.submit}
-          >
-            Salvar
-          </Button>
-        </form>
+            <form className={classes.container} noValidate autoComplete="off">
+              <TextField
+                fullWidth
+                label="Nome Completo"
+                className={classes.textField}
+                type="string"
+                name="name"
+                margin="normal"
+                variant="outlined"
+                value={name}
+                onChange={this.handleChange("name")}
+              />
+              <TextField
+                fullWidth
+                label="Apelido"
+                className={classes.textField}
+                type="string"
+                name="nickname"
+                margin="normal"
+                variant="outlined"
+                value={nickname}
+                onChange={this.handleChange("nickname")}
+              />
+              <TextField
+                fullWidth
+                label="Data de Nascimento"
+                className={classes.textField}
+                type="string"
+                name="birth_date"
+                margin="normal"
+                variant="outlined"
+                value={birth_date}
+                onChange={this.handleChange("birth_date")}
+              />
+              <TextField
+                fullWidth
+                label="Gênero"
+                className={classes.textField}
+                type="string"
+                name="gender"
+                margin="normal"
+                variant="outlined"
+                value={gender}
+                onChange={this.handleChange("gender")}
+              />
+              <Select
+                value={this.state.age}
+                onChange={this.handleChange}
+                inputProps={{
+                  name: "age",
+                  id: "age-simple"
+                }}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+              <TextField
+                fullWidth
+                label="Cidade e Estado"
+                className={classes.textField}
+                type="number"
+                name="city_id"
+                margin="normal"
+                variant="outlined"
+                value={city_id}
+                onChange={this.handleChange("city_id")}
+              />
+              <TextField
+                fullWidth
+                label="Rua"
+                className={classes.textField}
+                type="string"
+                name="street"
+                margin="normal"
+                variant="outlined"
+                value={street}
+                onChange={this.handleChange("street")}
+              />
+              <TextField
+                fullWidth
+                label="Número"
+                className={classes.textField}
+                type="number"
+                name="number"
+                margin="normal"
+                variant="outlined"
+                value={number}
+                onChange={this.handleChange("number")}
+              />
+              <TextField
+                fullWidth
+                label="Complemento"
+                className={classes.textField}
+                type="string"
+                name="complement"
+                margin="normal"
+                variant="outlined"
+                value={complement}
+                onChange={this.handleChange("complement")}
+              />
+              <TextField
+                fullWidth
+                label="Bairro"
+                className={classes.textField}
+                type="string"
+                name="district"
+                margin="normal"
+                variant="outlined"
+                value={district}
+                onChange={this.handleChange("district")}
+              />
+              <TextField
+                fullWidth
+                label="CEP"
+                className={classes.textField}
+                type="string"
+                name="postal_code"
+                margin="normal"
+                variant="outlined"
+                value={postal_code}
+                onChange={this.handleChange("postal_code")}
+              />
+              <TextField
+                fullWidth
+                label="Telefone"
+                className={classes.textField}
+                type="string"
+                name="phone"
+                margin="normal"
+                variant="outlined"
+                value={phone}
+                onChange={this.handleChange("phone")}
+              />
+              {/* TODO: USER LOCALSTORAGE */}
+              <TextField
+                fullWidth
+                label="Usuário"
+                className={classes.textField}
+                type="number"
+                name="role_id"
+                margin="normal"
+                variant="outlined"
+                value={role_id}
+                onChange={this.handleChange("role_id")}
+              />
+              <TextField
+                fullWidth
+                label="Email"
+                className={classes.textField}
+                type="email"
+                name="email"
+                margin="normal"
+                variant="outlined"
+                value={email}
+                onChange={this.handleChange("email")}
+              />
+              <TextField
+                fullWidth
+                label="Senha"
+                className={classes.textField}
+                type="password"
+                margin="normal"
+                variant="outlined"
+                value={password}
+                onChange={this.handleChange("password")}
+              />
+
+              <Button
+                fullWidth
+                variant="raised"
+                color="primary"
+                className={classes.submit}
+                disabled={
+                  email &&
+                  password &&
+                  name &&
+                  city_id &&
+                  street &&
+                  number &&
+                  district &&
+                  postal_code
+                    ? false
+                    : true
+                }
+                onClick={this.handleSave}
+              >
+                Salvar
+              </Button>
+            </form>
+          </Paper>
+        </main>
+        {/* <Snackbar
+     anchorOrigin={{ vertical, horizontal }}
+     open={openSnackbar}
+     autoHideDuration={2000}
+     onClose={this.handleCloseSnackbar}
+     ContentProps={{
+       "aria-describedby": "message-id"
+      }}
+      message=
+      /> */}
       </React.Fragment>
     );
   }
 }
 
 Register.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  actions: PropTypes.object,
+  states: PropTypes.array,
+  cities: PropTypes.array,
+  addUser: PropTypes.object,
+  message: PropTypes.string,
+  openSnackbar: PropTypes.bool
 };
 
-export default withStyles(styles)(Register);
+const mapStateToProps = state => {
+  return {
+    addUser: state.register.addUser,
+    message: state.register.message,
+    states: state.register.states,
+    cities: state.register.cities,
+    openSnackbar: state.register.openSnackbar
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    actions: bindActionCreators(
+      {
+        ...actions
+      },
+      dispatch
+    )
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Register));

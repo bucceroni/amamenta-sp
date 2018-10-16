@@ -11,7 +11,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
-// import LocationOnIcon from "@material-ui/icons/LocationOn";
 import PregnantWomanIcon from "@material-ui/icons/PregnantWoman";
 import BusinessIcon from "@material-ui/icons/Business";
 
@@ -39,7 +38,7 @@ class MenuList extends React.Component {
             <ListItemText className={classes.iconText} primary="Localizar" />
           </ListItem>
 
-          {user.role === 2 ? (
+          {user.role === "user" ? (
             <ListItem button={true} component={Link} to="/user">
               <ListItemIcon>
                 <PregnantWomanIcon />
@@ -48,7 +47,7 @@ class MenuList extends React.Component {
             </ListItem>
           ) : null}
 
-          {user.role === 3 ? (
+          {user.role === "institution" ? (
             <ListItem button={true} component={Link} to="/institution">
               <ListItemIcon>
                 <BusinessIcon />
