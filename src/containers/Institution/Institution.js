@@ -3,12 +3,14 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as actions from "./actions";
+import * as actions from "../../actions/actions";
 
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-import styles from "./styles";
+const styles ={
+
+}
 
 class Institution extends Component {
   state = {};
@@ -28,7 +30,7 @@ class Institution extends Component {
 
 const mapStateToProps = state => {
   return {
-    ...state.institution
+    ...state.login
   };
 };
 
@@ -46,4 +48,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(Institution));
+)(withStyles(styles)(Institution));

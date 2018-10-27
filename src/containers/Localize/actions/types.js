@@ -1,2 +1,0 @@
-export const GET_INSTITUTIONS = "GET_INSTITUTIONS";
-

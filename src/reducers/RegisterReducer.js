@@ -1,8 +1,6 @@
-import * as types from "./actions/types";
+import * as types from "../actions/types";
 
 const initialState = {
-  states:[],
-  cities:[],
   addUser: {},
   message: "",
   openSnackbar: false,
@@ -16,16 +14,6 @@ export default function reduce(state = initialState, action) {
       return {
         ...state,
         ...payload,
-      };
-      case `${types.GET_STATES}`:
-      return {
-        ...state,
-        states: payload,
-      };
-      case `${types.GET_CITIES}`:
-      return {
-        ...state,
-        cities: payload,
       };
     case `${types.CLOSE_SNACKBAR}`:
       return {

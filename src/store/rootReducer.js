@@ -1,15 +1,11 @@
 import { combineReducers } from 'redux'
 
-import user from '../containers/User/UserReducer'
-import institution from '../containers/Institution/InstitutionReducer'
-import localize from '../containers/Localize/LocalizeReducer'
-import register from '../containers/Register/RegisterReducer'
+import home from '../reducers/HomeReducer'
+import register from '../reducers/HomeReducer'
 import login from '../containers/Login/LoginReducer'
 
 const rootReducer = combineReducers({
-  institution,
-  localize,
-  user,
+  home,
   register,
   login
 })

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as actions from "./actions";
+import * as actions from "../../actions/actions";
 
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -94,12 +94,12 @@ class Localize extends Component {
 Localize.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.object,
-  institutions: PropTypes.array
+  home: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
-    institutions: state.localize.institutions
+    institutions: state.home.institutions
   };
 };
 

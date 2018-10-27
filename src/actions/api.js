@@ -7,7 +7,6 @@ const api =
     Accept: "application/json",
     "content-type": "application/json",
   };
-
 class Api {
   static async getStates() {
     const res = await axios.get(`${api}/states`, {headers});
@@ -30,33 +29,9 @@ class Api {
       throw new Error(`HTTP status ${res.status}`);
     }
   }
-
-
-
-
-
-
-
-
-  static async login(email, password) {
-    const res = await axios.post(
-      `${api}/login`,
-      { email: email, password: password },
-      { headers }
-    )//.then(res=> res).catch(error =>  error)
-    if (res.status >= 200 && res.status <= 207) {
-      return res.data;
-    } else {
-      throw new Error(`HTTP status ${res.status}`);
-    }
-  }
   
-  static async logout(id, token) {
-    const res = await axios.post(
-      `${api}/logout`,
-      { id: id, token: token },
-      { headers }
-    );
+  static async getInstitutions() {
+    const res = await axios.get(`${api}/institutions`, { headers });
     if (res.status >= 200 && res.status <= 207) {
       return res.data;
     } else {
@@ -64,22 +39,5 @@ class Api {
     }
   }
 
-  //POST /user
-  //Add user
-  static async addUser(name, nickname) {
-    const res = await axios.post(
-      `${api}`,
-      { name: name, nickname: nickname },
-      {
-        headers
-      }
-    );
-    if (res.status >= 200 && res.status <= 207) {
-      return res.data;
-    } else {
-      throw new Error(`HTTP status ${res.status}`);
-    }
-  }
 }
-
 export default Api;

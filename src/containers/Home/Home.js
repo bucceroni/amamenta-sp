@@ -2,13 +2,17 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-import Infos from "../../components/Infos/Infos"
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as actions from "../../actions/actions";
 
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+
+import Infos from "../../components/Infos/Infos"
 
 const styles = theme => ({
   card: {
@@ -40,6 +44,11 @@ const styles = theme => ({
   }
 });
 class Home extends Component {
+
+  componentDidMount() {
+    const { actions } = this.props;
+    actions.getInstitutions();
+  }
 
   render() {
     const { classes } = this.props;
@@ -122,7 +131,28 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  actions: PropTypes.object,
 };
 
-export default withStyles(styles)(Home);
+const mapStateToProps = state => {
+  return {
+    ...state.home
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    actions: bindActionCreators(
+      {
+        ...actions
+      },
+      dispatch
+    )
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Home));

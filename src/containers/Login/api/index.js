@@ -13,7 +13,7 @@ class Api {
       `${api}/login`,
       { email: email, password: password },
       { headers }
-    ).then(res=> res).catch(error =>  error)
+    )//.then(res=> res).catch(error =>  error)
     if (res.status >= 200 && res.status <= 207) {
       return res.data;
     } else {
