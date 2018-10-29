@@ -1,6 +1,15 @@
 import api from "./api";
 import * as types from "./types";
 
+export function getInstitutions() {
+  return async dispatch => {
+    dispatch({
+      type: types.GET_INSTITUTIONS,
+      payload: await api.getInstitutions()
+    });
+  };
+}
+
 export function getStates() {
   return async dispatch => {
     dispatch({
@@ -19,11 +28,20 @@ export function getCities(state_id) {
   };
 }
 
-export function getInstitutions() {
+export function getRoles() {
   return async dispatch => {
     dispatch({
-      type: types.GET_INSTITUTIONS,
-      payload: await api.getInstitutions()
+      type: types.GET_ROLES,
+      payload: await api.getRoles()
     });
   };
 }
+
+// export function getEvents() {
+//   return async dispatch => {
+//     dispatch({
+//       type: types.GET_EVENTS,
+//       payload: await api.getEvents()
+//     });
+//   };
+// }

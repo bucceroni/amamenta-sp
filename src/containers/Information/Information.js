@@ -69,6 +69,9 @@ class Infos extends Component {
       <React.Fragment>
         <CssBaseline />
         <main>
+        <Typography variant="display1" gutterBottom>
+          Informações sobre doação
+        </Typography>
           <Grid container justify="center" spacing={16}>
             <Grid item>
               <Card className={classes.card}>

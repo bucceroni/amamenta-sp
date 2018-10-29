@@ -13,6 +13,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
 import PregnantWomanIcon from "@material-ui/icons/PregnantWoman";
 import BusinessIcon from "@material-ui/icons/Business";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import InfoIcon from "@material-ui/icons/Info";
+import EventNoteIcon from "@material-ui/icons/EventNote";
 
 import styles from "./styles";
 
@@ -38,6 +41,20 @@ class MenuList extends React.Component {
             <ListItemText className={classes.iconText} primary="Localizar" />
           </ListItem>
 
+          <ListItem button={true} component={Link} to="/information">
+            <ListItemIcon>
+              <InfoIcon />
+            </ListItemIcon>
+            <ListItemText className={classes.iconText} primary="Informações" />
+          </ListItem>
+
+             <ListItem button={true} component={Link} to="/events">
+            <ListItemIcon>
+              <EventNoteIcon />
+            </ListItemIcon>
+            <ListItemText className={classes.iconText} primary="Eventos" />
+          </ListItem>
+
           {user.role === "user" ? (
             <ListItem button={true} component={Link} to="/user">
               <ListItemIcon>
@@ -58,6 +75,25 @@ class MenuList extends React.Component {
               />
             </ListItem>
           ) : null}
+
+          {user.role === "admin" ? (
+            <ListItem button={true} component={Link} to="/administrator">
+              <ListItemIcon>
+                <BusinessIcon />
+              </ListItemIcon>
+              <ListItemText
+                className={classes.iconText}
+                primary="Administrador"
+              />
+            </ListItem>
+          ) : null}
+
+          <ListItem button={true} component={Link} to="/login">
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText className={classes.iconText} primary="Login" />
+          </ListItem>
         </List>
       </React.Fragment>
     );

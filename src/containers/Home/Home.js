@@ -12,8 +12,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-import Infos from "../../components/Infos/Infos"
-
 const styles = theme => ({
   card: {
     maxWidth: 400,
@@ -48,6 +46,8 @@ class Home extends Component {
   componentDidMount() {
     const { actions } = this.props;
     actions.getInstitutions();
+    actions.getRoles();
+    // actions.getEvents();
   }
 
   render() {
@@ -120,10 +120,6 @@ class Home extends Component {
               </Typography>
             </div>
           </div>
-
-          <Infos />
-
-          
         </main>
       </React.Fragment>
     );

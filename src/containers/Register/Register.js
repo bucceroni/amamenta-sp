@@ -13,8 +13,8 @@ import Paper from "@material-ui/core/Paper";
 // import Snackbar from "@material-ui/core/Snackbar";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 
 const styles = theme => ({
   layout: {
@@ -62,7 +62,7 @@ const styles = theme => ({
 
 class Register extends Component {
   state = {
-    state_id:"",
+    state_id: "",
     city_id: "",
     email: "",
     password: "",
@@ -82,6 +82,7 @@ class Register extends Component {
   componentDidMount() {
     const { actions } = this.props;
     actions.getStates();
+    actions.getRoles();
   }
 
   handleSubmit = () => {
@@ -101,7 +102,7 @@ class Register extends Component {
       email,
       password
     } = this.state;
-    const { actions} = this.props;
+    const { actions } = this.props;
     actions.addUser(
       name,
       nickname,
@@ -121,9 +122,10 @@ class Register extends Component {
   };
 
   handleChange = prop => event => {
-    if(prop === "state_id"){
-      const {actions} = this.props
-      actions.getCities(event.target.value)
+    const { actions } = this.props;
+
+    if (prop === "state_id") {
+      actions.getCities(event.target.value);
     }
     this.setState({ [prop]: event.target.value });
   };
@@ -146,11 +148,7 @@ class Register extends Component {
       email,
       password
     } = this.state;
-    const {
-      classes,
-      states,
-      cities
-    } = this.props;
+    const { classes, states, cities, roles } = this.props;
 
     return (
       <React.Fragment>
@@ -210,33 +208,43 @@ class Register extends Component {
                 value={gender}
                 onChange={this.handleChange("gender")}
               />
-              <Select
-                value={state_id}
-                onChange={this.handleChange("state_id")}
-                inputProps={{
-                  name: "state_id"
-                }}
-              >
-                {states.map((item, index) => {
-                  return(
-                    <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
-                  )
-                })}  
-              </Select>
-              <Select
-              disabled={false}
-                value={city_id}
-                onChange={this.handleChange("city_id")}
-                inputProps={{
-                  name: "city_id"
-                }}
-              >
-                {cities.map((item, index) => {
-                  return(
-                    <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
-                  )
-                })}  
-              </Select>
+              <div>
+                <Select
+                  value={state_id}
+                  onChange={this.handleChange("state_id")}
+                  inputProps={{
+                    name: "state_id"
+                  }}
+                >
+                  {states &&
+                    states.map((item, index) => {
+                      return (
+                        <MenuItem key={index} value={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      );
+                    })}
+                </Select>
+              </div>
+              <div>
+                <Select
+                  disabled={false}
+                  value={city_id}
+                  onChange={this.handleChange("city_id")}
+                  // inputProps={{
+                  //   name: "city_id"
+                  // }}
+                >
+                  {cities &&
+                    cities.map((item, index) => {
+                      return (
+                        <MenuItem key={index} value={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      );
+                    })}
+                </Select>
+              </div>
               <TextField
                 fullWidth
                 label="Rua"
@@ -303,18 +311,24 @@ class Register extends Component {
                 value={phone}
                 onChange={this.handleChange("phone")}
               />
-              {/* TODO: USER LOCALSTORAGE */}
-              <TextField
-                fullWidth
-                label="Usuário"
-                className={classes.textField}
-                type="number"
-                name="role_id"
-                margin="normal"
-                variant="outlined"
-                value={role_id}
-                onChange={this.handleChange("role_id")}
-              />
+              <div>
+                <Select
+                  value={role_id}
+                  onChange={this.handleChange("role_id")}
+                  inputProps={{
+                    name: "role_id"
+                  }}
+                >
+                  {roles &&
+                    roles.map((item, index) => {
+                      return (
+                        <MenuItem key={index} value={item.id}>
+                          {item.description}
+                        </MenuItem>
+                      );
+                    })}
+                </Select>
+              </div>
               <TextField
                 fullWidth
                 label="Email"
@@ -381,6 +395,7 @@ Register.propTypes = {
   actions: PropTypes.object,
   states: PropTypes.array,
   cities: PropTypes.array,
+  roles: PropTypes.array,
   addUser: PropTypes.object,
   message: PropTypes.string,
   openSnackbar: PropTypes.bool
@@ -388,8 +403,9 @@ Register.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    states: state.home.states,
-    cities: state.home.cities,
+    states: state.register.states,
+    cities: state.register.cities,
+    roles: state.home.roles
   };
 };
 

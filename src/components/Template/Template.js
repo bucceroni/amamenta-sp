@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Link } from "react-router-dom";
-
 import MenuList from "./MenuList";
 
 import classNames from "classnames";
@@ -17,7 +15,6 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import InputIcon from "@material-ui/icons/Input";
 
 import styles from "./styles";
 
@@ -77,15 +74,6 @@ class Template extends React.Component {
                 >
                   Amamenta-SP
                 </Typography>
-
-                <Grid item>
-                <IconButton color="inherit"  component={Link}
-                    to="/login">
-                {/* <Badge badgeContent={"Entrar"}> */}
-                  <InputIcon />
-                {/* </Badge> */}
-              </IconButton>
-                </Grid>
               </Grid>
             </Toolbar>
           </AppBar>
