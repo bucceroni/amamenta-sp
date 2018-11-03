@@ -17,12 +17,17 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 const styles = theme => ({
   card: {
     maxWidth: 400,
-    backgroundColor: "#fff4da"
+    backgroundColor: "#3F51B5",
+    color: "#ffffff"
+  },
+  text: {
+    color: "#ffffff"
   },
   actions: {
     display: "flex"
   },
   expand: {
+    color: "#ffffff",
     transform: "rotate(0deg)",
     transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest
@@ -48,7 +53,6 @@ class Infos extends Component {
   handleExpandClickOne = () => {
     this.setState(state => ({ expandedOne: !state.expandedOne }));
   };
-
   handleExpandClickTwo = () => {
     this.setState(state => ({ expandedTwo: !state.expandedTwo }));
   };
@@ -69,13 +73,16 @@ class Infos extends Component {
       <React.Fragment>
         <CssBaseline />
         <main>
-        <Typography variant="display1" gutterBottom>
-          Informações sobre doação
-        </Typography>
+          <Typography variant="display1" gutterBottom>
+            Informações sobre doação
+          </Typography>
           <Grid container justify="center" spacing={16}>
             <Grid item>
               <Card className={classes.card}>
-                <CardHeader title="Quem pode ser doadora de leite humano?" />
+                <CardHeader
+                  classes={{ title: classes.text }}
+                  title="Quem pode ser doadora de leite humano?"
+                />
                 <CardActions className={classes.actions} disableActionSpacing>
                   <IconButton
                     className={classnames(classes.expand, {
@@ -93,7 +100,7 @@ class Infos extends Component {
                   unmountOnExit
                 >
                   <CardContent>
-                    <Typography paragraph>
+                    <Typography paragraph className={classes.text}>
                       Algumas mulheres quando estão amamentando produzem um
                       volume de leite além da necessidade do bebê, o que
                       possibilita que sejam doadoras de um Banco de Leite
@@ -103,9 +110,12 @@ class Infos extends Component {
                       saudável, não usar medicamentos que impeçam a doação e se
                       dispor a ordenhar e a doar o excedente.
                     </Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" className={classes.text}>
                       Fonte:{" "}
-                      <a href="http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360">
+                      <a
+                        className={classes.text}
+                        href="http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360"
+                      >
                         http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360
                       </a>
                     </Typography>
@@ -115,7 +125,10 @@ class Infos extends Component {
             </Grid>
             <Grid item>
               <Card className={classes.card}>
-                <CardHeader title="Como preparar o frasco para coletar o leite humano?" />
+                <CardHeader
+                  classes={{ title: classes.text }}
+                  title="Como preparar o frasco para coletar o leite humano?"
+                />
                 <CardActions className={classes.actions} disableActionSpacing>
                   <IconButton
                     className={classnames(classes.expand, {
@@ -133,7 +146,7 @@ class Infos extends Component {
                   unmountOnExit
                 >
                   <CardContent>
-                    <Typography paragraph>
+                    <Typography paragraph className={classes.text}>
                       <li>
                         Escolha um frasco de vidro com tampa plástica, pode ser
                         de café solúvel ou maionese;
@@ -156,9 +169,12 @@ class Infos extends Component {
                       </li>
                       <li>Você poderá usar quando estiver seco.</li>
                     </Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" className={classes.text}>
                       Fonte:{" "}
-                      <a href="http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360">
+                      <a
+                        className={classes.text}
+                        href="http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360"
+                      >
                         http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360
                       </a>
                     </Typography>
@@ -169,7 +185,10 @@ class Infos extends Component {
 
             <Grid item>
               <Card className={classes.card}>
-                <CardHeader title="Como se preparar para retirar o leite humano (ordenhar)?" />
+                <CardHeader
+                  classes={{ title: classes.text }}
+                  title="Como se preparar para retirar o leite humano (ordenhar)?"
+                />
                 <CardActions className={classes.actions} disableActionSpacing>
                   <IconButton
                     className={classnames(classes.expand, {
@@ -187,7 +206,7 @@ class Infos extends Component {
                   unmountOnExit
                 >
                   <CardContent>
-                    <Typography paragraph>
+                    <Typography paragraph className={classes.text}>
                       <p>
                         O leite deve ser retirado depois que o bebê mamar ou
                         quando as mamas estiverem muito cheias.
@@ -210,9 +229,12 @@ class Infos extends Component {
                         uma toalha limpa.
                       </li>
                     </Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" className={classes.text}>
                       Fonte:{" "}
-                      <a href="http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360">
+                      <a
+                        className={classes.text}
+                        href="http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360"
+                      >
                         http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360
                       </a>
                     </Typography>
@@ -223,7 +245,10 @@ class Infos extends Component {
 
             <Grid item>
               <Card className={classes.card}>
-                <CardHeader title="Como retirar o leite humano (ordenhar)?" />
+                <CardHeader
+                  classes={{ title: classes.text }}
+                  title="Como retirar o leite humano (ordenhar)?"
+                />
                 <CardActions className={classes.actions} disableActionSpacing>
                   <IconButton
                     className={classnames(classes.expand, {
@@ -241,7 +266,7 @@ class Infos extends Component {
                   unmountOnExit
                 >
                   <CardContent>
-                    <Typography paragraph>
+                    <Typography paragraph className={classes.text}>
                       <p>Comece fazendo massagem suave e circular nas mamas.</p>
                       <p>
                         Massageie as mamas com as polpas dos dedos começando na
@@ -269,9 +294,12 @@ class Infos extends Component {
                         no frasco.
                       </li>
                     </Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" className={classes.text}>
                       Fonte:{" "}
-                      <a href="http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360">
+                      <a
+                        className={classes.text}
+                        href="http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360"
+                      >
                         http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360
                       </a>
                     </Typography>
@@ -282,7 +310,10 @@ class Infos extends Component {
 
             <Grid item>
               <Card className={classes.card}>
-                <CardHeader title="Como guardar o leite retirado para doação?" />
+                <CardHeader
+                  classes={{ title: classes.text }}
+                  title="Como guardar o leite retirado para doação?"
+                />
                 <CardActions className={classes.actions} disableActionSpacing>
                   <IconButton
                     className={classnames(classes.expand, {
@@ -300,7 +331,7 @@ class Infos extends Component {
                   unmountOnExit
                 >
                   <CardContent>
-                    <Typography paragraph>
+                    <Typography paragraph className={classes.text}>
                       <p>
                         O frasco com o leite retirado deve ser armazenado no
                         congelador ou freezer. Na próxima vez que for retirar o
@@ -318,9 +349,12 @@ class Infos extends Component {
                         internados em unidades neonatais.
                       </p>
                     </Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" className={classes.text}>
                       Fonte:{" "}
-                      <a href="http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360">
+                      <a
+                        className={classes.text}
+                        href="http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360"
+                      >
                         http://www.redeblh.fiocruz.br/cgi/cgilua.exe/sys/start.htm?sid=360
                       </a>
                     </Typography>

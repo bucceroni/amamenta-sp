@@ -13,6 +13,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
 import PregnantWomanIcon from "@material-ui/icons/PregnantWoman";
 import BusinessIcon from "@material-ui/icons/Business";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import InfoIcon from "@material-ui/icons/Info";
 import EventNoteIcon from "@material-ui/icons/EventNote";
@@ -36,7 +37,7 @@ class MenuList extends React.Component {
 
           <ListItem button={true} component={Link} to="/localize">
             <ListItemIcon>
-              <BusinessIcon />
+              <LocationOnIcon />
             </ListItemIcon>
             <ListItemText className={classes.iconText} primary="Localizar" />
           </ListItem>

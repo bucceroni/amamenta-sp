@@ -10,11 +10,10 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
-// import Snackbar from "@material-ui/core/Snackbar";
+import Snackbar from "@material-ui/core/Snackbar";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
 
 const styles = theme => ({
   layout: {
@@ -23,7 +22,6 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-      width: 400,
       marginLeft: "auto",
       marginRight: "auto"
     }
@@ -76,14 +74,44 @@ class Register extends Component {
     district: "",
     postal_code: "",
     phone: [],
-    birth_date: ""
+    birth_date: "",
+    disabledCity: true
   };
 
   componentDidMount() {
     const { actions } = this.props;
     actions.getStates();
     actions.getRoles();
-  }
+
+    actions.postAddUser(
+      this.state.name,
+      this.state.nickname,
+      this.state.birth_date,
+      this.state.gender,
+      this.state.city_id,
+      this.state.street,
+      this.state.number,
+      this.state.complement,
+      this.state.district,
+      this.state.postal_code,
+      this.state.phone,
+      this.state.role_id,
+      this.state.email,
+      this.state.password
+    );
+ }
+
+  handleChange = prop => event => {
+    const { actions } = this.props;
+
+    if (prop === "state_id") {
+      actions.getCities(event.target.value);
+      this.setState({
+        disabledCity: false
+      });
+    }
+    this.setState({ [prop]: event.target.value });
+  };
 
   handleSubmit = () => {
     const {
@@ -103,7 +131,7 @@ class Register extends Component {
       password
     } = this.state;
     const { actions } = this.props;
-    actions.addUser(
+    actions.postAddUser(
       name,
       nickname,
       birth_date,
@@ -119,15 +147,16 @@ class Register extends Component {
       email,
       password
     );
+
   };
 
-  handleChange = prop => event => {
-    const { actions } = this.props;
+  handleCloseSnackbar = () => {
+    const { actions, history, addUser } = this.props;
+    actions.closeSnackbarRegister();
 
-    if (prop === "state_id") {
-      actions.getCities(event.target.value);
+    if (addUser.email) {
+      history.push("/login");
     }
-    this.setState({ [prop]: event.target.value });
   };
 
   render() {
@@ -146,9 +175,17 @@ class Register extends Component {
       phone,
       role_id,
       email,
-      password
+      password,
+      disabledCity
     } = this.state;
-    const { classes, states, cities, roles } = this.props;
+    const {
+      classes,
+      states,
+      cities,
+      roles,
+      message,
+      openSnackbar
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -191,9 +228,9 @@ class Register extends Component {
                 label="Data de Nascimento"
                 className={classes.textField}
                 type="string"
+                placeholder="dd/mm/aaaa"
                 name="birth_date"
                 margin="normal"
-                variant="outlined"
                 value={birth_date}
                 onChange={this.handleChange("birth_date")}
               />
@@ -208,43 +245,53 @@ class Register extends Component {
                 value={gender}
                 onChange={this.handleChange("gender")}
               />
-              <div>
-                <Select
-                  value={state_id}
-                  onChange={this.handleChange("state_id")}
-                  inputProps={{
-                    name: "state_id"
-                  }}
-                >
-                  {states &&
-                    states.map((item, index) => {
-                      return (
-                        <MenuItem key={index} value={item.id}>
-                          {item.name}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
-              </div>
-              <div>
-                <Select
-                  disabled={false}
-                  value={city_id}
-                  onChange={this.handleChange("city_id")}
-                  // inputProps={{
-                  //   name: "city_id"
-                  // }}
-                >
-                  {cities &&
-                    cities.map((item, index) => {
-                      return (
-                        <MenuItem key={index} value={item.id}>
-                          {item.name}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
-              </div>
+              <TextField
+                fullWidth
+                select
+                label="Estado"
+                className={classes.textField}
+                value={state_id}
+                onChange={this.handleChange("state_id")}
+                SelectProps={{
+                  MenuProps: {
+                    className: classes.menu
+                  }
+                }}
+                margin="normal"
+              >
+                {states &&
+                  states.map((item, index) => {
+                    return (
+                      <MenuItem key={index} value={item.id}>
+                        {item.name}
+                      </MenuItem>
+                    );
+                  })}
+              </TextField>
+              <TextField
+                fullWidth
+                select
+                label="Cidade"
+                className={classes.textField}
+                disabled={disabledCity}
+                value={city_id}
+                onChange={this.handleChange("city_id")}
+                SelectProps={{
+                  MenuProps: {
+                    className: classes.menu
+                  }
+                }}
+                margin="normal"
+              >
+                {cities &&
+                  cities.map((item, index) => {
+                    return (
+                      <MenuItem key={index} value={item.id}>
+                        {item.name}
+                      </MenuItem>
+                    );
+                  })}
+              </TextField>
               <TextField
                 fullWidth
                 label="Rua"
@@ -311,24 +358,36 @@ class Register extends Component {
                 value={phone}
                 onChange={this.handleChange("phone")}
               />
-              <div>
-                <Select
-                  value={role_id}
-                  onChange={this.handleChange("role_id")}
-                  inputProps={{
-                    name: "role_id"
-                  }}
-                >
-                  {roles &&
-                    roles.map((item, index) => {
+              <TextField
+                fullWidth
+                select
+                label="Tipo de usuário"
+                className={classes.textField}
+                value={role_id}
+                onChange={this.handleChange("role_id")}
+                SelectProps={{
+                  MenuProps: {
+                    className: classes.menu
+                  }
+                }}
+                margin="normal"
+              >
+                {roles &&
+                  roles.map((item, index) => {
+                    if (item.description === "admin") {
+                      return null;
+                    } else {
                       return (
                         <MenuItem key={index} value={item.id}>
-                          {item.description}
+                          {item.description === "user" ? "Doador" : null}
+                          {item.description === "institution"
+                            ? "Instituição"
+                            : null}
                         </MenuItem>
                       );
-                    })}
-                </Select>
-              </div>
+                    }
+                  })}
+              </TextField>
               <TextField
                 fullWidth
                 label="Email"
@@ -368,23 +427,23 @@ class Register extends Component {
                     ? false
                     : true
                 }
-                onClick={this.handleSave}
+                onClick={this.handleSubmit}
               >
                 Salvar
               </Button>
             </form>
           </Paper>
         </main>
-        {/* <Snackbar
-     anchorOrigin={{ vertical, horizontal }}
-     open={openSnackbar}
-     autoHideDuration={2000}
-     onClose={this.handleCloseSnackbar}
-     ContentProps={{
-       "aria-describedby": "message-id"
-      }}
-      message=
-      /> */}
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={openSnackbar}
+          autoHideDuration={2000}
+          onClose={this.handleCloseSnackbar}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={<span id="message-id">{message}</span>}
+        />
       </React.Fragment>
     );
   }
@@ -398,14 +457,19 @@ Register.propTypes = {
   roles: PropTypes.array,
   addUser: PropTypes.object,
   message: PropTypes.string,
-  openSnackbar: PropTypes.bool
+  openSnackbar: PropTypes.bool,
+  registerUser: PropTypes.bool
 };
 
 const mapStateToProps = state => {
   return {
     states: state.register.states,
     cities: state.register.cities,
-    roles: state.home.roles
+    roles: state.home.roles,
+    addUser: state.register.addUser,
+    message: state.register.message,
+    openSnackbar: state.register.openSnackbar,
+    registerUser: state.register.registerUser
   };
 };
 

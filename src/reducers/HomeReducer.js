@@ -20,11 +20,11 @@ export default function reduce(state = initialState, action) {
         ...state,
         roles: payload
       };
-    // case `${types.GET_EVENTS}`:
-    // return {
-    //   ...state,
-    //   events: payload
-    // };
+    case `${types.GET_EVENTS}`:
+    return {
+      ...state,
+      events: payload
+    };
     default:
       return state;
   }

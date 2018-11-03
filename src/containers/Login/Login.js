@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as actions from "./actions";
+import * as actions from "../../actions/actions";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -57,11 +57,11 @@ class Login extends Component {
     horizontal: "center"
   };
 
-  componentDidMount(){
-    const {history, login} = this.props
-      if (login) {
-        history.push("/logout");
-      }
+  componentDidMount() {
+    const { history, login } = this.props;
+    if (login) {
+      history.push("/logout");
+    }
   }
 
   handleSubmit = () => {
@@ -76,7 +76,7 @@ class Login extends Component {
 
   handleCloseSnackbar = () => {
     const { actions } = this.props;
-    const { history, login } = this.props;
+    const { history, login, user } = this.props;
     actions.closeSnackbar();
 
     if (login) {
@@ -84,7 +84,15 @@ class Login extends Component {
         email: "",
         password: ""
       });
-      history.push("/user");
+      if (user.role === "admin") {
+        history.push("/administrator");
+      }
+      if (user.role === "user") {
+        history.push("/user");
+      }
+      if (user.role === "institution") {
+        history.push("/institution");
+      }
     } else {
       this.setState({
         email: "",
@@ -181,7 +189,7 @@ const mapStateToProps = state => {
     user: state.login.user,
     login: state.login.login,
     message: state.login.message,
-    openSnackbar: state.login.openSnackbar
+    openSnackbar: state.login.openSnackbar,
   };
 };
 

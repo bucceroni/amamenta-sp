@@ -46,7 +46,7 @@ class Localize extends Component {
     return (
       <div>
         <Typography variant="display1" gutterBottom>
-          Instituições
+          Localizar Instituições
         </Typography>
         <Grid item xs={12}>
         {/* <AutoComplete data={institutions}/> */}

@@ -5,7 +5,8 @@ const initialState = {
   cities: [],
   addUser: {},
   message: "",
-  openSnackbar: false
+  openSnackbar: false,
+  registerUser: false
 };
 
 export default function reduce(state = initialState, action) {
@@ -22,16 +23,16 @@ export default function reduce(state = initialState, action) {
         ...state,
         cities: payload
       };
-    case `${types.ADD_USER}`:
+    case `${types.POST_ADD_USER}`:
       return {
         ...state,
         ...payload
       };
-    // case `${types.CLOSE_SNACKBAR}`:
-    //   return {
-    //     ...state,
-    //     openSnackbar: payload
-    //   };
+    case `${types.CLOSE_SNACKBAR_REGISTER}`:
+      return {
+        ...state,
+        openSnackbar: payload
+      };
     default:
       return state;
   }

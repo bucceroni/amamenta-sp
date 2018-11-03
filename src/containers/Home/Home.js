@@ -34,15 +34,11 @@ const styles = theme => ({
     transform: "rotate(180deg)"
   },
   buttons: {
-    marginTop: 75
-  },
-  institution: {
     marginTop: 75,
     marginBottom: 75
   }
 });
 class Home extends Component {
-
   componentDidMount() {
     const { actions } = this.props;
     actions.getInstitutions();
@@ -112,11 +108,18 @@ class Home extends Component {
                 align="center"
                 color="textPrimary"
                 paragraph
-                className={classes.institution}
               >
-                Cadastrar sua instituição também é muito fácil, envie email para{" "}
-                <a href="mailto:amamenta-sp@gmail.com">amamenta-sp@gmail.com</a>{" "}
-                e entraremos em contato.
+                Cadastrar sua instituição também é muito fácil.
+              </Typography>
+              <Typography
+                variant="title"
+                align="center"
+                color="textPrimary"
+                paragraph
+              >
+                Cadastre o usuário e selecione a opção instituição, depois
+                insira os dados da sua instituição e aguarde a aprovação,
+                entraremos em contato.
               </Typography>
             </div>
           </div>
@@ -128,7 +131,7 @@ class Home extends Component {
 
 Home.propTypes = {
   classes: PropTypes.object.isRequired,
-  actions: PropTypes.object,
+  actions: PropTypes.object
 };
 
 const mapStateToProps = state => {
