@@ -82,24 +82,7 @@ class Register extends Component {
     const { actions } = this.props;
     actions.getStates();
     actions.getRoles();
-
-    actions.postAddUser(
-      this.state.name,
-      this.state.nickname,
-      this.state.birth_date,
-      this.state.gender,
-      this.state.city_id,
-      this.state.street,
-      this.state.number,
-      this.state.complement,
-      this.state.district,
-      this.state.postal_code,
-      this.state.phone,
-      this.state.role_id,
-      this.state.email,
-      this.state.password
-    );
- }
+  }
 
   handleChange = prop => event => {
     const { actions } = this.props;
@@ -147,7 +130,6 @@ class Register extends Component {
       email,
       password
     );
-
   };
 
   handleCloseSnackbar = () => {

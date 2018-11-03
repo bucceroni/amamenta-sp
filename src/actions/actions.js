@@ -142,6 +142,11 @@ export function postAddUser(
       registerUser = false;
       openSnackbar = true;
       message = "Cadastro inválido";
+    } else if (res.message === "Email not valide") {
+      addUser = {};
+      registerUser = false;
+      openSnackbar = true;
+      message = "Cadastro inválido, email inválido";
     } else if (res.message === "Email exist") {
       addUser = {};
       registerUser = false;
