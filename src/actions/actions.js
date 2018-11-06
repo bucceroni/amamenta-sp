@@ -1,6 +1,14 @@
 import api from "./api";
 import * as types from "./types";
 
+export function getInstitutionsType() {
+  return async dispatch => {
+    dispatch({
+      type: types.GET_INSTITUTIONS_TYPE,
+      payload: await api.getInstitutionsType()
+    });
+  };
+}
 export function getStates() {
   return async dispatch => {
     dispatch({
@@ -146,7 +154,7 @@ export function postAddUser(
       addUser = {};
       registerUser = false;
       openSnackbar = true;
-      message = "Cadastro inválido, email inválido";
+      message = "Email inválido";
     } else if (res.message === "Email exist") {
       addUser = {};
       registerUser = false;
@@ -165,11 +173,79 @@ export function postAddUser(
   };
 }
 
+export function postAddInstitution(
+  city_id,
+  email,
+  name,
+  street,
+  number,
+  complement,
+  district,
+  postal_code,
+  phone,
+  site,
+  type
+) {
+  return async dispatch => {
+    let addInstitution;
+    let registerInstitution;
+    let message;
+    let openSnackbar;
+    const res = await await api.postAddInstitution(
+      city_id,
+      email,
+      name,
+      street,
+      number,
+      complement,
+      district,
+      postal_code,
+      phone,
+      site,
+      type
+    );
+    if (res === undefined) {
+      addInstitution = {};
+      registerInstitution = false;
+      openSnackbar = true;
+      message = "Cadastro inválido";
+    } else if (res.message === "Email not valide") {
+      addInstitution = {};
+      registerInstitution = false;
+      openSnackbar = true;
+      message = "Email inválido";
+    } else if (res.message === "Email exist") {
+      addInstitution = {};
+      registerInstitution = false;
+      openSnackbar = true;
+      message = "Cadastro inválido, utilize outro email";
+    } else {
+      addInstitution = res;
+      registerInstitution = true;
+      openSnackbar = true;
+      message = "Cadastro realizado com sucesso";
+    }
+    dispatch({
+      type: types.POST_ADD_INSTITUTION,
+      payload: { addInstitution, registerInstitution, message, openSnackbar }
+    });
+  };
+}
+
 export function closeSnackbarRegister() {
   return async dispatch => {
     dispatch({
       type: types.CLOSE_SNACKBAR_REGISTER,
       payload: false
+    });
+  };
+}
+
+export function getInstitutionUser(user_id) {
+  return async dispatch => {
+    dispatch({
+      type: types.GET_INSTITUTION_USER,
+      payload: await api.getInstitutionUser(user_id)
     });
   };
 }

@@ -4,9 +4,11 @@ const initialState = {
   states: [],
   cities: [],
   addUser: {},
+  addInstitution: {},
   message: "",
   openSnackbar: false,
-  registerUser: false
+  registerUser: false,
+  registerInstitution: false
 };
 
 export default function reduce(state = initialState, action) {
@@ -24,6 +26,11 @@ export default function reduce(state = initialState, action) {
         cities: payload
       };
     case `${types.POST_ADD_USER}`:
+      return {
+        ...state,
+        ...payload
+      };
+    case `${types.POST_ADD_INSTITUTION}`:
       return {
         ...state,
         ...payload

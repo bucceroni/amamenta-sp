@@ -7,6 +7,14 @@ const headers = {
   "content-type": "application/json"
 };
 class Api {
+  static async getInstitutionsType() {
+    const res = await axios.get(`${api}/institution-types`);
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      throw new Error(`HTTP status ${res.status}`);
+    }
+  }
   static async getStates() {
     const res = await axios.get(`${api}/states`);
     if (res.status >= 200 && res.status <= 207) {
@@ -54,7 +62,7 @@ class Api {
 
   static async login(email, password) {
     const res = await axios
-      .post(`${api}/login`, { email: email, password: password }, {headers})
+      .post(`${api}/login`, { email: email, password: password }, { headers })
       .then(res => res)
       .catch(error => error);
     if (res.status >= 200 && res.status <= 207) {
@@ -116,6 +124,56 @@ class Api {
       return res.data;
     } else {
       return res.response;
+    }
+  }
+
+  static async postAddInstitution(
+    city_id,
+    email,
+    name,
+    street,
+    number,
+    complement,
+    district,
+    postal_code,
+    phone,
+    site,
+    type
+  ) {
+    let body = {
+      city_id: city_id,
+      email: email,
+      name: name,
+      street: street,
+      number: number,
+      complement: complement,
+      district: district,
+      postal_code: postal_code,
+      phone: [phone],
+      site: site,
+      institution_type: type
+    };
+    const res = await axios
+      .post(`${api}/institutions`, body, headers)
+      .then(res => res)
+      .catch(error => error);
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      return res.response;
+    }
+  }
+
+  static async getInstitutionUser(user_id) {
+    const res = await axios.get(`${api}/link-user-institutions`,  {
+      headers: {
+        "user_id": user_id
+      }
+    })
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      throw new Error(`HTTP status ${res.status}`);
     }
   }
 }

@@ -9,6 +9,7 @@ import Register from "./containers/Register/Register";
 import User from "./containers/User/User";
 import Localize from "./containers/Localize/Localize";
 import Institution from "./containers/Institution/Institution";
+import RegisterInstitution from "./containers/Institution/RegisterInstitution";
 import Information from "./containers/Information/Information";
 import Events from "./containers/Events/Events";
 
@@ -19,14 +20,15 @@ class App extends Component {
         <Template>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/localize" component={Localize} />
-            <Route path="/information" component={Information} />
-            <Route path="/events" component={Events} />
-            <Route path="/login" component={Login} />
-            <Route path="/logout" component={Logout} />
-            <Route path="/register" component={Register} />
-            <Route path="/user" component={User} />
-            <Route path="/institution" component={Institution} />
+            <Route exact path="/localize" component={Localize} />
+            <Route exact path="/information" component={Information} />
+            <Route exact path="/events" component={Events} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/logout" component={Logout} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/user" component={User} />
+            <Route exact path="/institution" component={Institution} />
+            <Route exact path="/institution/register" component={RegisterInstitution} />
             {/* <Route path="/newPost" component={NewPost} />
              <Route path="/:category/:id" component={DetailsPost} />
              <Route path="/react" component={ReactPage} />
