@@ -9,7 +9,7 @@ export function getInstitutionsType() {
     });
   };
 }
-export function getStates() {
+export function getStates(){
   return async dispatch => {
     dispatch({
       type: types.GET_STATES,
@@ -62,6 +62,11 @@ export function login(email, password) {
     let openSnackbar;
     const res = await api.login(email, password);
     if (res === undefined) {
+      user = {};
+      login = false;
+      openSnackbar = true;
+      message = "Usuário ou senha inválido";
+    } else if (res.message === "email ou password invalid") {
       user = {};
       login = false;
       openSnackbar = true;
@@ -173,6 +178,73 @@ export function postAddUser(
   };
 }
 
+export function putEditUser(
+  user_id,
+  name,
+  nickname,
+  birth_date,
+  gender,
+  // city_id,
+  street,
+  number,
+  complement,
+  district,
+  postal_code,
+  phone,
+  role_id
+  // email,
+  // password
+) {
+  return async dispatch => {
+    let user;
+    let message;
+    let openSnackbar;
+    const res = await await api.putEditUser(
+      user_id,
+      name,
+      nickname,
+      birth_date,
+      gender,
+      // city_id,
+      street,
+      number,
+      complement,
+      district,
+      postal_code,
+      phone,
+      role_id
+      // email,
+      // password
+    );
+    if (res === undefined) {
+      user = this.props.getState().login.user 
+      openSnackbar = true;
+      message = "Cadastro inválido";
+    } else if (res.message === "Email not valide") {
+      user = this.props.getState().login.user 
+      openSnackbar = true;
+      message = "Email inválido";
+    } else if (res.message === "Email exist") {
+      user = this.props.getState().login.user 
+      openSnackbar = true;
+      message = "Cadastro inválido, utilize outro email";
+    } else {
+      user = res;
+      openSnackbar = true;
+      message = "Cadastro editado com sucesso";
+    }
+    dispatch({
+      type: types.PUT_USER,
+      payload: { message, openSnackbar }
+    });
+    dispatch({
+      type: types.PUT_USER,
+      payload: { user }
+    });
+  };
+}
+
+
 export function postAddInstitution(
   city_id,
   email,
@@ -246,6 +318,24 @@ export function getInstitutionUser(user_id) {
     dispatch({
       type: types.GET_INSTITUTION_USER,
       payload: await api.getInstitutionUser(user_id)
+    });
+  };
+}
+
+export function postInstitutionUser(user_id, institution_id) {
+  return async dispatch => {
+    dispatch({
+      type: types.POST_INSTITUTION_USER,
+      payload: await api.postInstitutionUser(user_id, institution_id)
+    });
+  };
+}
+
+export function deleteInstitutionUser(user_id, institution_id) {
+  return async dispatch => {
+    dispatch({
+      type: types.DELETE_INSTITUTION_USER,
+      payload: await api.deleteInstitutionUser(user_id, institution_id)
     });
   };
 }

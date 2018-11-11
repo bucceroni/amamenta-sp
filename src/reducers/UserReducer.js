@@ -1,7 +1,8 @@
 import * as types from "../actions/types";
 
 const initialState = {
-  institution: {},
+  userInstitution: {},
+  reportInstitution: {}
 };
 
 export default function reduce(state = initialState, action) {
@@ -11,7 +12,17 @@ export default function reduce(state = initialState, action) {
     case `${types.GET_INSTITUTION_USER}`:
       return {
         ...state,
-        institution: payload
+        userInstitution: payload
+      };
+    case `${types.POST_INSTITUTION_USER}`:
+      return {
+        ...state,
+        reportInstitution: payload
+      };
+    case `${types.DELETE_INSTITUTION_USER}`:
+      return {
+        ...state,
+        reportInstitution: payload
       };
     default:
       return state;

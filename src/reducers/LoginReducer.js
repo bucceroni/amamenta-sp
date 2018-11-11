@@ -4,7 +4,7 @@ const initialState = {
   user: {},
   login: false,
   message: "",
-  openSnackbar: false,
+  openSnackbar: false
 };
 
 export default function reduce(state = initialState, action) {
@@ -14,17 +14,22 @@ export default function reduce(state = initialState, action) {
     case `${types.LOGIN}`:
       return {
         ...state,
-        ...payload,
+        ...payload
       };
     case `${types.CLOSE_SNACKBAR}`:
       return {
         ...state,
-        openSnackbar: payload,
+        openSnackbar: payload
       };
     case `${types.LOGOUT}`:
       return {
         ...state,
-        ...payload,
+        ...payload
+      };
+    case `${types.PUT_USER}`:
+      return {
+        ...state,
+        ...payload
       };
     default:
       return state;

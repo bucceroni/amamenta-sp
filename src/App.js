@@ -12,6 +12,7 @@ import Institution from "./containers/Institution/Institution";
 import RegisterInstitution from "./containers/Institution/RegisterInstitution";
 import Information from "./containers/Information/Information";
 import Events from "./containers/Events/Events";
+import UserEdit from "./containers/User/UserEdit";
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
             <Route exact path="/logout" component={Logout} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/user" component={User} />
+            <Route exact path="/user/edit" component={UserEdit} />
             <Route exact path="/institution" component={Institution} />
             <Route exact path="/institution/register" component={RegisterInstitution} />
             {/* <Route path="/newPost" component={NewPost} />

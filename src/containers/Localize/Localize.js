@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+import { Link } from "react-router-dom";
+
 // import AutoComplete from "../../components/AutoComplete/AutoComplete"
 
 import { connect } from "react-redux";
@@ -11,9 +13,13 @@ import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-// import classNames from 'classnames';
+
+import IconCheck from "@material-ui/icons/Check";
+import IconClose from "@material-ui/icons/Close";
 
 const styles = {
   card: {
@@ -25,23 +31,23 @@ const styles = {
 };
 
 class Localize extends Component {
-//  state= {
-//    search: null
-// }
+  //  state= {
+  //    search: null
+  // }
 
   componentDidMount() {
     const { actions } = this.props;
     actions.getInstitutions();
   }
 
-  handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
+  handleSelectInstitution = async () => {
+    const { actions, history } = this.props;
+    await actions.postInstitutionUser();
+    history.push("/user");
   };
 
-
   render() {
-    // const { classes, className, institutions } = this.props;
-    const { classes, institutions } = this.props;
+    const { classes, institutions, user, reportInstitution } = this.props;
 
     return (
       <div>
@@ -49,7 +55,7 @@ class Localize extends Component {
           Localizar Instituições
         </Typography>
         <Grid item xs={12}>
-        {/* <AutoComplete data={institutions}/> */}
+          {/* <AutoComplete data={institutions}/> */}
         </Grid>
         <Grid container spacing={24}>
           {institutions.map((value, index) => {
@@ -81,6 +87,18 @@ class Localize extends Component {
                       Cidade: {value.city} - Estado: N/A
                     </Typography>
                   </CardContent>
+                  {/* {user && user.role === "user" && ( */}
+                  <CardActions>
+                    <Button
+                      size="small"
+                      color="primary"
+                      onClick={this.handleSelectInstitution}
+                    >
+                      <IconCheck />
+                      Cadastre-se
+                    </Button>
+                  </CardActions>
+                  {/* )} */}
                 </Card>
               </Grid>
             );
@@ -94,12 +112,16 @@ class Localize extends Component {
 Localize.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.object,
-  home: PropTypes.object
+  home: PropTypes.object,
+  user: PropTypes.object,
+  reportInstitution: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
-    institutions: state.home.institutions
+    institutions: state.home.institutions,
+    user: state.login.user,
+    reportInstitution: state.user.reportInstitution
   };
 };
 
