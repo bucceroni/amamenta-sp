@@ -24,15 +24,17 @@ class Events extends Component {
         <Typography variant="display1" gutterBottom>
           Eventos
         </Typography>
-        <Grid container spacing={24}>
-          {events.map((value, index) => {
-            return (
-              <Grid item xs={12} key={index}>
-                <CardEvents value={value} />
-              </Grid>
-            );
-          })}
-        </Grid>
+        {typeof events !== 'string' && (
+          <Grid container spacing={24}>
+            {events.map((value, index) => {
+              return (
+                <Grid item xs={12} key={index}>
+                  <CardEvents value={value} />
+                </Grid>
+              );
+            })}
+          </Grid>
+        )}
       </div>
     );
   }

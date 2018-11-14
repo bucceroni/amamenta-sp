@@ -13,38 +13,41 @@ import Button from "@material-ui/core/Button";
 
 const styles = theme => ({});
 
-class Institution extends Component {
+class RegisterEvents extends Component {
   state = {};
 
   render() {
     return (
       <div>
         <Typography variant="display1" gutterBottom>
-          Instituição
+          Cadastrar Evento
         </Typography>
 
         <Grid container spacing={24}>
           <Grid item>
-            <Button
-              color="primary"
-              component={Link}
-              to={`/institution/register`}
-            >
-              <span role="img" aria-label="aria-label">
-                🏢 Cadastrar Instituição
-              </span>
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              color="primary"
-              component={Link}
-              to={`/institution/register/events`}
-            >
-              <span role="img" aria-label="aria-label">
-                🎫 Cadastrar Evento
-              </span>
-            </Button>
+          primeira campannha
+Doacao de leute materno
+Link: banco de leite - ipirangaede
+
+Início: 10/10/2018
+
+Fim: 10/12/2018
+
+Instituição: banco de leite - ipirangaede
+
+Posto de coleta de leite materno
+
+Site: wwww.ipiranga.com.br
+
+Email: contcccato@ipiranga.com.br
+
+Endereço:
+
+Rua street1, número: 1, complemento: 2
+
+Bairro: e - CEP: 12345-4456
+
+Cidade: Alta Floresta D'Oeste - Estado: N/A
           </Grid>
         </Grid>
       </div>
@@ -72,4 +75,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Institution));
+)(withStyles(styles)(RegisterEvents));

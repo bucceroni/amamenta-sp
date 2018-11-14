@@ -8,7 +8,7 @@ const headers = {
 };
 class Api {
   static async getInstitutionsType() {
-    const res = await axios.get(`${api}/institution-types`);
+    const res = await axios.get(`${api}/institution-types`, headers);
     if (res.status >= 200 && res.status <= 207) {
       return res.data;
     } else {
@@ -16,7 +16,7 @@ class Api {
     }
   }
   static async getStates() {
-    const res = await axios.get(`${api}/states`);
+    const res = await axios.get(`${api}/states`, headers);
     if (res.status >= 200 && res.status <= 207) {
       return res.data;
     } else {
@@ -52,7 +52,7 @@ class Api {
   }
 
   static async getEvents() {
-    const res = await axios.get(`${api}/promotions`);
+    const res = await axios.get(`${api}/promotions`, headers);
     if (res.status >= 200 && res.status <= 207) {
       return res.data;
     } else {
@@ -62,7 +62,7 @@ class Api {
 
   static async login(email, password) {
     const res = await axios
-      .post(`${api}/login`, { email: email, password: password }, { headers })
+      .post(`${api}/login`, { email: email, password: password }, headers)
       .then(res => res)
       .catch(error => error);
     if (res.status >= 200 && res.status <= 207) {
@@ -74,7 +74,7 @@ class Api {
 
   static async logout(token) {
     const res = await axios
-      .get(`${api}/logout`, { token: token }, { headers })
+      .get(`${api}/logout`, { token: token }, headers)
       .then(res => res)
       .catch(error => error);
     if (res.status >= 200 && res.status <= 207) {
@@ -140,7 +140,7 @@ class Api {
     district,
     postal_code,
     // phone,
-    role_id,
+    role_id
     // email,
     // password
   ) {
@@ -157,7 +157,7 @@ class Api {
       district: district,
       postal_code: postal_code,
       // phone: [phone],
-      role_id: role_id,
+      role_id: role_id
       // email: email,
       // password: password
     };
@@ -210,11 +210,12 @@ class Api {
   }
 
   static async getInstitutionUser(user_id) {
-    const res = await axios.get(`${api}/link-user-institutions`, {
-      headers: {
-        "user-id": 55
-      }
-    });
+    let headers = {
+      Accept: "application/json",
+      "content-type": "application/json",
+      user_id: 54
+    };
+    const res = await axios.get(`${api}/link-user-institutions`, headers);
     if (res.status >= 200 && res.status <= 207) {
       return res.data;
     } else {

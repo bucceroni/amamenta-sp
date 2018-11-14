@@ -11,8 +11,10 @@ import Localize from "./containers/Localize/Localize";
 import Institution from "./containers/Institution/Institution";
 import RegisterInstitution from "./containers/Institution/RegisterInstitution";
 import Information from "./containers/Information/Information";
+import RegisterEvents from "./containers/Institution/RegisterEvents";
 import Events from "./containers/Events/Events";
 import UserEdit from "./containers/User/UserEdit";
+import NotFound from "./containers/NotFound/NotFound";
 
 class App extends Component {
   render() {
@@ -31,6 +33,8 @@ class App extends Component {
             <Route exact path="/user/edit" component={UserEdit} />
             <Route exact path="/institution" component={Institution} />
             <Route exact path="/institution/register" component={RegisterInstitution} />
+            <Route exact path="/institution/register/events" component={RegisterEvents} />
+            <Route component={NotFound} />
             {/* <Route path="/newPost" component={NewPost} />
              <Route path="/:category/:id" component={DetailsPost} />
              <Route path="/react" component={ReactPage} />

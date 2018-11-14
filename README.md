@@ -21,6 +21,7 @@ Projeto de conclusão de curso
   - Dependências
     - Material UI - `npm install @material-ui/core`
     - Material Icon - `npm install @material-ui/icons`
+    - MUI-datatables - `npm install mui-datatables`
     - React Router - `npm install react-router-dom`
     - Redux - `npm install redux`
     - React Redux - `npm install react-redux`
