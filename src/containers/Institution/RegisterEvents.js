@@ -25,29 +25,12 @@ class RegisterEvents extends Component {
 
         <Grid container spacing={24}>
           <Grid item>
-          primeira campannha
-Doacao de leute materno
-Link: banco de leite - ipirangaede
-
-Início: 10/10/2018
-
-Fim: 10/12/2018
-
-Instituição: banco de leite - ipirangaede
-
-Posto de coleta de leite materno
-
-Site: wwww.ipiranga.com.br
-
-Email: contcccato@ipiranga.com.br
-
-Endereço:
-
-Rua street1, número: 1, complemento: 2
-
-Bairro: e - CEP: 12345-4456
-
-Cidade: Alta Floresta D'Oeste - Estado: N/A
+            primeira campannha Doacao de leute materno Link: banco de leite -
+            ipirangaede Início: 10/10/2018 Fim: 10/12/2018 Instituição: banco de
+            leite - ipirangaede Posto de coleta de leite materno Site:
+            wwww.ipiranga.com.br Email: contcccato@ipiranga.com.br Endereço: Rua
+            street1, número: 1, complemento: 2 Bairro: e - CEP: 12345-4456
+            Cidade: Alta Floresta D'Oeste - Estado: N/A
           </Grid>
         </Grid>
       </div>

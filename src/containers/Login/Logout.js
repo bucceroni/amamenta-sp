@@ -69,7 +69,7 @@ class Logout extends Component {
   };
 
   render() {
-    const { classes, openSnackbar, message, user } = this.props;
+    const { classes, openSnackbar, message } = this.props;
     const { vertical, horizontal } = this.state;
 
     return (
@@ -84,7 +84,7 @@ class Logout extends Component {
             <Typography variant="headline">Logout</Typography>
 
             <form className={classes.container} noValidate autoComplete="off">
-              <Typography>{user.nickname}, deseja sair?</Typography>
+              <Typography>Deseja sair?</Typography>
               <Button
                 fullWidth
                 variant="raised"
@@ -105,7 +105,7 @@ class Logout extends Component {
           ContentProps={{
             "aria-describedby": "message-id"
           }}
-          message={<span id="message-id">{message }</span>}
+          message={<span id="message-id">{message}</span>}
         />
       </React.Fragment>
     );

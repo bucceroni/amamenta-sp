@@ -56,7 +56,7 @@ class MenuList extends React.Component {
             <ListItemText className={classes.iconText} primary="Eventos" />
           </ListItem>
 
-          {user.role === "user" ? (
+          {user && user.role === "user" ? (
             <ListItem button={true} component={Link} to="/user">
               <ListItemIcon>
                 <PregnantWomanIcon />
@@ -65,7 +65,7 @@ class MenuList extends React.Component {
             </ListItem>
           ) : null}
 
-          {user.role === "institution" ? (
+          {user && user.role === "institution" ? (
             <ListItem button={true} component={Link} to="/institution">
               <ListItemIcon>
                 <BusinessIcon />
@@ -77,7 +77,7 @@ class MenuList extends React.Component {
             </ListItem>
           ) : null}
 
-          {user.role === "admin" ? (
+          {user && user.role === "admin" ? (
             <ListItem button={true} component={Link} to="/administrator">
               <ListItemIcon>
                 <BusinessIcon />

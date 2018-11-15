@@ -1,55 +1,52 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import MUIDataTable from "mui-datatables";
-
-import { Link } from "react-router-dom";
-
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "../../actions/actions";
 
-import { withStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Button from "@material-ui/core/Button";
+import MUIDataTable from "mui-datatables";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
-import IconCheck from "@material-ui/icons/Check";
-import IconClose from "@material-ui/icons/Close";
+import ModalDetailsInstitutions from "../../components/ModalDetailsInstitution";
 
-const styles = {
-  card: {
-    backgroundColor: "#3F51B5"
-  },
-  text: {
-    color: "#ffffff"
-  }
-};
+// import Button from "@material-ui/core/Button";
+// import IconCheck from "@material-ui/icons/Check";
+// import IconClose from "@material-ui/icons/Close";
 
 class Localize extends Component {
-  //  state= {
-  //    search: null
-  // }
+  state = {
+    openModal: false,
+    dataModal: {}
+  };
 
   componentDidMount() {
     const { actions } = this.props;
     actions.getInstitutions();
   }
 
-  handleSelectInstitution = async () => {
-    const { actions, history } = this.props;
-    await actions.postInstitutionUser();
-    history.push("/user");
+  handleCloseModal = () => {
+    this.setState({ openModal: false });
   };
 
+  // handleSelectInstitution = async () => {
+  //   const { actions, history } = this.props;
+  //   await actions.postInstitutionUser();
+  //   history.push("/user");
+  // };
+
   render() {
-    const { classes, institutions, user, reportInstitution } = this.props;
+    const { openModal, dataModal } = this.state;
+    const { institutions } = this.props;
 
     const options = {
+      onRowClick: (rowData, rowState) => {
+        this.setState({
+          dataModal: institutions[rowState.dataIndex],
+          openModal: true
+        });
+      },
       textLabels: {
         body: {
           noMatch: "Nenhum resultado encontrado",
@@ -76,8 +73,8 @@ class Localize extends Component {
       caseSensitive: false,
       fixedHeader: true,
       pagination: true,
+      rowsPerPage: 100,
       resizableColumns: false,
-      responsive: "scroll",
       rowHover: true,
       sortFilterList: true,
       serverSide: false,
@@ -88,7 +85,7 @@ class Localize extends Component {
       downloadOptions: { filename: "Instituições.csv", separator: "," },
       filter: true,
       viewColumns: true,
-      selectableRows: false,
+      selectableRows: false
     };
 
     return (
@@ -98,7 +95,11 @@ class Localize extends Component {
         </Typography>
         <Grid item xs={12}>
           <MUIDataTable
-            title={"Selecione uma instituição e veja mais informações"}
+            title={
+              <Typography variant="subheading" gutterBottom>
+                Selecione uma instituição e veja mais informações
+              </Typography>
+            }
             data={institutions.map(item => {
               return [
                 item.name,
@@ -108,25 +109,23 @@ class Localize extends Component {
                 item.district
               ];
             })}
-            columns={[
-              "Nome",
-              "Tipo",
-              "Estado",
-              "Cidade",
-              "Bairro"
-            ]}
+            columns={["Nome", "Tipo", "Estado", "Cidade", "Bairro"]}
             options={options}
           />
         </Grid>
+        <ModalDetailsInstitutions
+          openModal={openModal}
+          dataModal={dataModal}
+          onClose={this.handleCloseModal}
+        />
       </div>
     );
   }
 }
 
 Localize.propTypes = {
-  classes: PropTypes.object.isRequired,
   actions: PropTypes.object,
-  home: PropTypes.object,
+  institutions: PropTypes.array,
   user: PropTypes.object,
   reportInstitution: PropTypes.object
 };
@@ -153,54 +152,19 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Localize));
+)(Localize);
 
-{
-  /* <Grid container spacing={24}>
-{institutions.map((value, index) => {
-  return (
-    <Grid item key={index}>
-      <Card>
-        <CardHeader
-          title={value.name}
-          subheader={value.type}
-          key={value.id}
-        />
-        <CardContent className={classes.card}>
-          <Typography className={classes.text}>
-            Site: {value.site}
-          </Typography>
-          <Typography className={classes.text}>
-            Telefone: {value.phone[0]}
-          </Typography>
-          <hr />
-          <Typography className={classes.text}>Endereço:</Typography>
-          <Typography className={classes.text}>
-            Rua {value.street}, número: {value.number}, complemento:{" "}
-            {value.complement}
-          </Typography>
-          <Typography className={classes.text}>
-            Bairro: {value.district} - CEP: {value.postal_code}
-          </Typography>
-          <Typography className={classes.text}>
-            Cidade: {value.city} - Estado: N/A
-          </Typography>
-        </CardContent>
-        {/* {user && user.role === "user" && ( */
-}
-//         <CardActions>
-//           <Button
-//             size="small"
-//             color="primary"
-//             onClick={this.handleSelectInstitution}
-//           >
-//             <IconCheck />
-//             Cadastre-se
-//           </Button>
-//         </CardActions>
-//         {/* )} */}
-//       </Card>
-//     </Grid>
-//   );
-// })}
-// </Grid> */}
+// withStyles(styles, { withTheme: true }(connect(mapStateToProps,mapDispatchToProps)(App))
+
+/* {user && user.role === "user" && (
+          <CardActions>
+            <Button
+              size="small"
+              color="primary"
+              onClick={this.handleSelectInstitution}
+            >
+              <IconCheck />
+              Cadastre-se
+            </Button>
+          </CardActions>
+        )} */

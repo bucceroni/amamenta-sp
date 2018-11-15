@@ -78,7 +78,7 @@ class Api {
       .then(res => res)
       .catch(error => error);
     if (res.status >= 200 && res.status <= 207) {
-      return res.data;
+      return res.status;
     } else {
       return res.response;
     }

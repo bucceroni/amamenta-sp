@@ -100,11 +100,11 @@ export function logout(token) {
     let message;
     let openSnackbar;
     const res = await api.logout(token);
-    if (res === undefined) {
+    if (res === 200) {
       user = {};
       login = false;
-      openSnackbar = true;
       message = "Logout realizado com sucesso";
+      openSnackbar = true;
     }
     dispatch({
       type: types.LOGOUT,
