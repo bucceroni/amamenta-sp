@@ -1,33 +1,31 @@
 import * as types from "../actions/types";
 
 const initialState = {
-  userInstitution: {},
+  donationUser: [],
+  openSnackbar: false,
+  message: ""
 };
 
 export default function reduce(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case `${types.GET_USER_INSTITUTION}`:
+    case `${types.ADD_DONATION_USER}`:
       return {
         ...state,
-        userInstitution: payload
+        donationUser: payload
       };
-    case `${types.POST_USER_INSTITUTION}`:
-      return {
-        ...state,
-        userInstitution: payload
-      };
-    case `${types.REMOVE_USER_INSTITUTION}`:
-      return {
-        ...state,
-        userInstitution: payload
-      };
-    case `${types.LOGOUT_USER}`:
+    case `${types.REMOVE_DONATION_USER}`:
       return {
         ...state,
         ...payload
       };
+    case `${types.CLOSE_SNACKBAR_DONATION_USER}`:
+      return {
+        ...state,
+        ...payload
+      };
+
     default:
       return state;
   }

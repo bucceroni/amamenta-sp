@@ -9,7 +9,7 @@ export function getInstitutionsType() {
     });
   };
 }
-export function getStates(){
+export function getStates() {
   return async dispatch => {
     dispatch({
       type: types.GET_STATES,
@@ -99,9 +99,13 @@ export function logout(token) {
     let login;
     let message;
     let openSnackbar;
+    let userInstitution;
+    let institutionUsers;
     const res = await api.logout(token);
     if (res === 200) {
       user = {};
+      userInstitution = {};
+      institutionUsers = {};
       login = false;
       message = "Logout realizado com sucesso";
       openSnackbar = true;
@@ -109,6 +113,14 @@ export function logout(token) {
     dispatch({
       type: types.LOGOUT,
       payload: { user, login, message, openSnackbar }
+    });
+    dispatch({
+      type: types.LOGOUT_USER,
+      payload: { userInstitution }
+    });
+    dispatch({
+      type: types.LOGOUT_INSTITUTION,
+      payload: { institutionUsers }
     });
   };
 }
@@ -195,11 +207,11 @@ export function putEditUser(
   // email,
   // password
 ) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     let user;
     let message;
     let openSnackbar;
-    const res = await await api.putEditUser(
+    const res = await api.putEditUser(
       user_id,
       name,
       nickname,
@@ -216,18 +228,11 @@ export function putEditUser(
       // email,
       // password
     );
-    if (res === undefined) {
-      user = this.props.getState().login.user 
+    let userFailed = getState().login.user;
+    if (typeof res === "string") {
+      user = userFailed;
       openSnackbar = true;
       message = "Cadastro inválido";
-    } else if (res.message === "Email not valide") {
-      user = this.props.getState().login.user 
-      openSnackbar = true;
-      message = "Email inválido";
-    } else if (res.message === "Email exist") {
-      user = this.props.getState().login.user 
-      openSnackbar = true;
-      message = "Cadastro inválido, utilize outro email";
     } else {
       user = res;
       openSnackbar = true;
@@ -235,15 +240,10 @@ export function putEditUser(
     }
     dispatch({
       type: types.PUT_USER,
-      payload: { message, openSnackbar }
-    });
-    dispatch({
-      type: types.PUT_USER,
-      payload: { user }
+      payload: { message, openSnackbar, user }
     });
   };
 }
-
 
 export function postAddInstitution(
   city_id,
@@ -263,7 +263,7 @@ export function postAddInstitution(
     let registerInstitution;
     let message;
     let openSnackbar;
-    const res = await await api.postAddInstitution(
+    const res = await api.postAddInstitution(
       city_id,
       email,
       name,
@@ -276,21 +276,11 @@ export function postAddInstitution(
       site,
       type
     );
-    if (res === undefined) {
+    if (typeof res === "string") {
       addInstitution = {};
       registerInstitution = false;
       openSnackbar = true;
       message = "Cadastro inválido";
-    } else if (res.message === "Email not valide") {
-      addInstitution = {};
-      registerInstitution = false;
-      openSnackbar = true;
-      message = "Email inválido";
-    } else if (res.message === "Email exist") {
-      addInstitution = {};
-      registerInstitution = false;
-      openSnackbar = true;
-      message = "Cadastro inválido, utilize outro email";
     } else {
       addInstitution = res;
       registerInstitution = true;
@@ -313,29 +303,215 @@ export function closeSnackbarRegister() {
   };
 }
 
-export function getInstitutionUser(user_id) {
-  return async dispatch => {
+//Event
+export function postAddEvent(description, site, title, date_initial, date_end) {
+  return async (dispatch, getState) => {
+    let addEvent;
+    let message;
+    let openSnackbar;
+    let institution_id = getState().user.userInstitution.institution_id;
+    const res = await api.postAddEvent(
+      institution_id,
+      description,
+      site,
+      title,
+      date_initial,
+      date_end
+    );
+    if (typeof res === "string") {
+      addEvent = {};
+      openSnackbar = true;
+      message = "Cadastro inválido";
+    } else {
+      addEvent = res;
+      openSnackbar = true;
+      message = "Cadastro realizado com sucesso";
+    }
     dispatch({
-      type: types.GET_INSTITUTION_USER,
-      payload: await api.getInstitutionUser(user_id)
+      type: types.POST_ADD_EVENT,
+      payload: { addEvent, message, openSnackbar }
     });
   };
 }
 
-export function postInstitutionUser(user_id, institution_id) {
+export function closeSnackbarEvent() {
   return async dispatch => {
     dispatch({
-      type: types.POST_INSTITUTION_USER,
-      payload: await api.postInstitutionUser(user_id, institution_id)
+      type: types.CLOSE_SNACKBAR_EVENT,
+      payload: false
     });
   };
 }
 
-export function deleteInstitutionUser(user_id, institution_id) {
+// User Institutiton
+export function getUserInstitution(user_id) {
   return async dispatch => {
     dispatch({
-      type: types.DELETE_INSTITUTION_USER,
-      payload: await api.deleteInstitutionUser(user_id, institution_id)
+      type: types.GET_USER_INSTITUTION,
+      payload: await api.getUserInstitution(user_id)
     });
   };
 }
+
+export function postUserInstitution(user_id, institution_id) {
+  return async dispatch => {
+    dispatch({
+      type: types.POST_USER_INSTITUTION,
+      payload: await api.postUserInstitution(user_id, institution_id)
+    });
+  };
+}
+
+export function removeUserInstitution(user_id) {
+  return async (dispatch, getState) => {
+    let institution_id = getState().user.userInstitution.institution_id;
+    let openSnackbar;
+    let message;
+    const res = await api.removeUserInstitution(user_id, institution_id);
+
+    if (typeof res === "string") {
+      openSnackbar = true;
+      message = "Instituição não pode ser excluído";
+    } else {
+      openSnackbar = true;
+      message = "Instituição excluída com sucesso";
+    }
+    dispatch({
+      type: types.REMOVE_USER_INSTITUTION,
+      payload: { message, openSnackbar }
+    });
+  };
+}
+
+export function closeSnackbarUserInstitution() {
+  return async dispatch => {
+    dispatch({
+      type: types.CLOSE_SNACKBAR_USER_INSTITUTION,
+      payload: false
+    });
+  };
+}
+
+// Institution Users
+export function getInstitutionUsers() {
+  return async (dispatch, getState) => {
+    let institution_id = getState().user.userInstitution.institution_id;
+    dispatch({
+      type: types.GET_INSTITUTION_USERS,
+      payload: await api.getInstitutionUsers(institution_id)
+    });
+  };
+}
+
+export function approveInstitutionUser(user_id) {
+  return async (dispatch, getState) => {
+    let institution_id = getState().user.userInstitution.institution_id;
+    let openSnackbar;
+    let message;
+    const res = await api.approveInstitutionUser(user_id, institution_id);
+
+    if (typeof res === "string") {
+      openSnackbar = true;
+      message = "Usuário não pode ser aprovado";
+    } else {
+      openSnackbar = true;
+      message = "Usuário aprovado com sucesso";
+    }
+    dispatch({
+      type: types.APPROVE_INSTITUTION_USER,
+      payload: { message, openSnackbar }
+    });
+  };
+}
+
+export function removeInstitutionUser(user_id) {
+  return async (dispatch, getState) => {
+    let institution_id = getState().user.userInstitution.institution_id;
+    let openSnackbar;
+    let message;
+    const res = await api.removeInstitutionUser(user_id, institution_id);
+
+    if (typeof res === "string") {
+      openSnackbar = true;
+      message = "Usuário não pode ser excluído";
+    } else {
+      openSnackbar = true;
+      message = "Usuário excluído com sucesso";
+    }
+    dispatch({
+      type: types.REMOVE_INSTITUTION_USER,
+      payload: { message, openSnackbar }
+    });
+  };
+}
+
+export function closeSnackbarInstitutionUser() {
+  return async dispatch => {
+    dispatch({
+      type: types.CLOSE_SNACKBAR_INSTITUTION_USER,
+      payload: false
+    });
+  };
+}
+
+
+// Donation Users
+export function getDonationUser(user_id) {
+  return async (dispatch) => {
+    dispatch({
+      type: types.GET_DONATION_USER,
+      payload: await api.getDonationUser(user_id)
+    });
+  };
+}
+
+// export function approveInstitutionUser(user_id) {
+//   return async (dispatch, getState) => {
+//     let institution_id = getState().user.userInstitution.institution_id;
+//     let openSnackbar;
+//     let message;
+//     const res = await api.approveInstitutionUser(user_id, institution_id);
+
+//     if (typeof res === "string") {
+//       openSnackbar = true;
+//       message = "Usuário não pode ser aprovado";
+//     } else {
+//       openSnackbar = true;
+//       message = "Usuário aprovado com sucesso";
+//     }
+//     dispatch({
+//       type: types.APPROVE_INSTITUTION_USER,
+//       payload: { message, openSnackbar }
+//     });
+//   };
+// }
+
+// export function removeInstitutionUser(user_id) {
+//   return async (dispatch, getState) => {
+//     let institution_id = getState().user.userInstitution.institution_id;
+//     let openSnackbar;
+//     let message;
+//     const res = await api.removeInstitutionUser(user_id, institution_id);
+
+//     if (typeof res === "string") {
+//       openSnackbar = true;
+//       message = "Usuário não pode ser excluído";
+//     } else {
+//       openSnackbar = true;
+//       message = "Usuário excluído com sucesso";
+//     }
+//     dispatch({
+//       type: types.REMOVE_INSTITUTION_USER,
+//       payload: { message, openSnackbar }
+//     });
+//   };
+// }
+
+// export function closeSnackbarInstitutionUser() {
+//   return async dispatch => {
+//     dispatch({
+//       type: types.CLOSE_SNACKBAR_INSTITUTION_USER,
+//       payload: false
+//     });
+//   };
+// }

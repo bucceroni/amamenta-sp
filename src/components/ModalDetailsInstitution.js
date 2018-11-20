@@ -11,7 +11,16 @@ import withMobileDialog from "@material-ui/core/withMobileDialog";
 
 class ModalDetailsInstitutions extends React.Component {
   render() {
-    const { fullScreen, openModal, dataModal, onClose } = this.props;
+    const {
+      fullScreen,
+      openModal,
+      dataModal,
+      onClose,
+      user,
+      registerUserInstitution,
+      registerInstitutionUser,
+      userInstitution
+    } = this.props;
     return (
       <Dialog
         fullScreen={fullScreen}
@@ -38,15 +47,45 @@ class ModalDetailsInstitutions extends React.Component {
                 <Typography>
                   Bairro: {dataModal.district} - CEP: {dataModal.postal_code}
                 </Typography>
-                <Typography>Cidade: {dataModal.city} - Estado: N/A</Typography>
+                <Typography>Cidade: {dataModal.city} - Estado: {dataModal.state}</Typography>
               </div>
             )}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} color="primary">
+          <Button onClick={onClose} color="secondary">
             Fechar
           </Button>
+          {user &&
+            (user.role === "user") &&
+            !userInstitution.status && (
+              <Button
+                onClick={() =>
+                  registerUserInstitution(
+                    user.user_id,
+                    dataModal.institution_id
+                  )
+                }
+                color="primary"
+              >
+                Cadastrar
+              </Button>
+            )}
+          {user &&
+            (user.role === "institution") &&
+            !userInstitution.status && (
+              <Button
+                onClick={() =>
+                  registerInstitutionUser(
+                    user.user_id,
+                    dataModal.institution_id
+                  )
+                }
+                color="primary"
+              >
+                Cadastrar
+              </Button>
+            )}
         </DialogActions>
       </Dialog>
     );
@@ -57,7 +96,11 @@ ModalDetailsInstitutions.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   openModal: PropTypes.bool,
   dataModal: PropTypes.object,
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
+  user: PropTypes.object,
+  registerUserInstitution: PropTypes.func,
+  registerInstitutionUser: PropTypes.func,
+  userInstitution: PropTypes.object
 };
 
 export default withMobileDialog()(ModalDetailsInstitutions);

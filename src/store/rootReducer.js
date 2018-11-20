@@ -1,15 +1,19 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from "redux";
 
-import home from '../reducers/HomeReducer'
-import register from '../reducers/RegisterReducer'
-import login from '../reducers/LoginReducer'
-import user from '../reducers/UserReducer'
+import home from "../reducers/HomeReducer";
+import register from "../reducers/RegisterReducer";
+import login from "../reducers/LoginReducer";
+import user from "../reducers/UserReducer";
+import institution from "../reducers/InstitutionReducer";
+import event from "../reducers/EventReducer";
 
 const rootReducer = combineReducers({
   home,
   register,
-  login, 
-  user
-})
+  login,
+  user,
+  institution,
+  event
+});
 
-export default rootReducer
+export default rootReducer;

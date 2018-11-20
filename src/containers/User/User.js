@@ -17,43 +17,65 @@ const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-  },
+    paddingBottom: theme.spacing.unit * 2
+  }
 });
 
 class User extends Component {
   componentDidMount() {
-    const { actions } = this.props;
-    actions.getInstitutionUser();
+    const { actions, user } = this.props;
+    actions.getUserInstitution(user.user_id);
   }
 
-  handleUnselectInstitution = () => {
-    const { actions } = this.props;
-    actions.deleteInstitutionUser();
-  };
-
   render() {
-    const { classes, userInstitution, reportInstitution} = this.props;
+    const { classes, userInstitution } = this.props;
+
     return (
       <div>
         <Typography variant="display1" gutterBottom>
-          Usuário - Doador
+          Doador
         </Typography>
         <Grid container spacing={24}>
-          <Grid item>
-            <Paper className={classes.root} elevation={1}>
-              <Typography variant="subheading" gutterBottom>
-              No momento você não faz parte de nenhuma instituição. 
-              </Typography>
-              <Typography variant="subheading" gutterBottom>
-                <Link to="/localize">Cadastre-se aqui</Link>
-              </Typography>
-            </Paper>
-            <Button
-              color="primary"
-              component={Link}
-              to={`/user/edit`}
-            >
+          <Grid item xs={12}>
+            {userInstitution.status === undefined && (
+              <Paper className={classes.root} elevation={1}>
+                <Typography variant="subheading" gutterBottom>
+                  No momento você não faz parte de nenhuma instituição.
+                </Typography>
+                <Typography variant="subheading" gutterBottom>
+                  <Link to="/localize">Cadastre-se aqui</Link>
+                </Typography>
+              </Paper>
+            )}
+
+            {userInstitution.status === "PENDING" && (
+              <Paper className={classes.root} elevation={1}>
+                <Typography variant="subheading" gutterBottom>
+                  Aguarde... solicitação pendente de aprovação. Entre em contato
+                  com a instituição
+                </Typography>
+              </Paper>
+            )}
+          </Grid>
+          {userInstitution.status === "APPROVED" && (
+            <Grid item xs={12}>
+              <Button color="primary" component={Link} to={`/user/institution`}>
+                <span role="img" aria-label="aria-label">
+                  🏥 Instituição Cadastrada
+                </span>
+              </Button>
+            </Grid>
+          )}
+
+          <Grid item xs={12}>
+            <Button color="primary" component={Link} to={`/user/donation`}>
+              <span role="img" aria-label="aria-label">
+                🍼 Doações
+              </span>
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button color="primary" component={Link} to={`/user/edit`}>
               <span role="img" aria-label="aria-label">
                 ✏ Editar usuário
               </span>
@@ -67,14 +89,14 @@ class User extends Component {
 
 User.propTypes = {
   classes: PropTypes.object.isRequired,
-  userInstitution: PropTypes.object,
-  reportInstitution: PropTypes.object
+  user: PropTypes.object,
+  userInstitution: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
-    userInstitution: state.user.userInstitution,
-    reportInstitution: state.user.reportInstitution,
+    user: state.login.user,
+    userInstitution: state.user.userInstitution
   };
 };
 

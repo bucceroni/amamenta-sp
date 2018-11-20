@@ -49,7 +49,7 @@ class MenuList extends React.Component {
             <ListItemText className={classes.iconText} primary="Informações" />
           </ListItem>
 
-             <ListItem button={true} component={Link} to="/events">
+          <ListItem button={true} component={Link} to="/events">
             <ListItemIcon>
               <EventNoteIcon />
             </ListItemIcon>
@@ -89,12 +89,21 @@ class MenuList extends React.Component {
             </ListItem>
           ) : null}
 
-          <ListItem button={true} component={Link} to="/login">
-            <ListItemIcon>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            <ListItemText className={classes.iconText} primary="Login" />
-          </ListItem>
+          {user && user.role ? (
+            <ListItem button={true} component={Link} to="/login">
+              <ListItemIcon>
+                <AccountCircleIcon />
+              </ListItemIcon>
+              <ListItemText className={classes.iconText} primary="Logout" />
+            </ListItem>
+          ) : (
+            <ListItem button={true} component={Link} to="/login">
+              <ListItemIcon>
+                <AccountCircleIcon />
+              </ListItemIcon>
+              <ListItemText className={classes.iconText} primary="Login" />
+            </ListItem>
+          )}
         </List>
       </React.Fragment>
     );

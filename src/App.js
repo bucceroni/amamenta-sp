@@ -15,6 +15,12 @@ import RegisterEvents from "./containers/Institution/RegisterEvents";
 import Events from "./containers/Events/Events";
 import UserEdit from "./containers/User/UserEdit";
 import NotFound from "./containers/NotFound/NotFound";
+import UserInstitutionDetails from "./containers/User/UserInstitutionDetails";
+import UserDonation from "./containers/User/UserDonation";
+import Administrator from "./containers/Administrator/Administrator";
+import InstitutionDetails from "./containers/Institution/InstitutionDetails";
+import InstitutionDonation from "./containers/Institution/InstitutionDonation";
+import InstitutionUsers from "./containers/Institution/InstitutionUsers";
 
 class App extends Component {
   render() {
@@ -30,17 +36,17 @@ class App extends Component {
             <Route exact path="/logout" component={Logout} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/user" component={User} />
+            <Route exact path="/user/institution" component={UserInstitutionDetails} />
+            <Route exact path="/user/donation" component={UserDonation} />
             <Route exact path="/user/edit" component={UserEdit} />
             <Route exact path="/institution" component={Institution} />
             <Route exact path="/institution/register" component={RegisterInstitution} />
-            <Route exact path="/institution/register/events" component={RegisterEvents} />
+            <Route exact path="/institution/details" component={InstitutionDetails} />
+            <Route exact path="/institution/events" component={RegisterEvents} />
+            <Route exact path="/institution/donation" component={InstitutionDonation} />
+            <Route exact path="/institution/users" component={InstitutionUsers} />
+            <Route exact path="/administrator" component={Administrator} />
             <Route component={NotFound} />
-            {/* <Route path="/newPost" component={NewPost} />
-             <Route path="/:category/:id" component={DetailsPost} />
-             <Route path="/react" component={ReactPage} />
-             <Route path="/udacity" component={UdacityPage} />
-             <Route path="/redux" component={ReduxPage} />
-             <Route component={NotFound} /> */}
           </Switch>
         </Template>
       </Router>

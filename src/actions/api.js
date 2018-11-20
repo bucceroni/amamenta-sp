@@ -4,7 +4,8 @@ const api = "https://u34n1y2e6l.execute-api.us-east-2.amazonaws.com/prod";
 
 const headers = {
   Accept: "application/json",
-  "content-type": "application/json"
+  "content-type": "application/json",
+  "Access-Control-Allow-Origin": "*"
 };
 class Api {
   static async getInstitutionsType() {
@@ -25,7 +26,7 @@ class Api {
   }
 
   static async getCities(state_id) {
-    const res = await axios.get(`${api}/cities?state-id=${state_id}`, headers);
+    const res = await axios.get(`${api}/cities?state_id=${state_id}`);
     if (res.status >= 200 && res.status <= 207) {
       return res.data;
     } else {
@@ -209,13 +210,39 @@ class Api {
     }
   }
 
-  static async getInstitutionUser(user_id) {
-    let headers = {
-      Accept: "application/json",
-      "content-type": "application/json",
-      user_id: 54
+  static async postAddEvent(
+    institution_id,
+    description,
+    site,
+    title,
+    date_initial,
+    date_end
+  ) {
+    let body = {
+      institution_id: institution_id,
+      description: description,
+      link: site,
+      title: title,
+      date_initial: date_initial,
+      date_end: date_end
     };
-    const res = await axios.get(`${api}/link-user-institutions`, headers);
+    const res = await axios
+      .post(`${api}/promotions`, body, headers)
+      .then(res => res)
+      .catch(error => error);
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      return res.response;
+    }
+  }
+
+  // user-institution
+  static async getUserInstitution(user_id) {
+    const res = await axios.get(
+      `${api}/link-user-institutions?user_id=${user_id}`,
+      headers
+    );
     if (res.status >= 200 && res.status <= 207) {
       return res.data;
     } else {
@@ -223,15 +250,16 @@ class Api {
     }
   }
 
-  static async postInstitutionUser(user_id, institution_id) {
+  static async postUserInstitution(user_id, institution_id) {
     let body = {
-      "user-id": 57,
-      "institution-id": 11
+      user_id: user_id,
+      institution_id: institution_id
     };
-    const res = await axios.post(`${api}/link-user-institutions`, {
+    const res = await axios.post(
+      `${api}/link-user-institutions`,
       body,
       headers
-    });
+    );
     if (res.status >= 200 && res.status <= 207) {
       return res.data;
     } else {
@@ -239,22 +267,82 @@ class Api {
     }
   }
 
-  static async deleteInstitutionUser(user_id, institution_id) {
-    let headers = {
-      Accept: "application/json",
-      "content-type": "application/json",
-      "user-id": user_id,
-      "institution-id": institution_id
+  static async removeUserInstitution(user_id, institution_id) {
+    let body = {
+      user_id: user_id,
+      institution_id: institution_id
     };
-    const res = await axios.delete(`${api}/link-user-institutions`, {
+    const res = await axios.post(
+      `${api}/link-user-institutions/delete/`,
+      body,
       headers
-    });
+    );
     if (res.status >= 200 && res.status <= 207) {
       return res.data;
     } else {
       throw new Error(`HTTP status ${res.status}`);
     }
   }
+
+  // institution-user
+  static async getInstitutionUsers(institution_id) {
+    const res = await axios.get(
+      `${api}/link-institution-users/?institution_id=${institution_id}`,
+      headers
+    );
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      throw new Error(`HTTP status ${res.status}`);
+    }
+  }
+
+  static async approveInstitutionUser(user_id, institution_id) {
+    let body = {
+      user_id: user_id,
+      institution_id: institution_id
+    };
+    const res = await axios.post(
+      `${api}/link-institution-users`,
+      body,
+      headers
+    );
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      throw new Error(`HTTP status ${res.status}`);
+    }
+  }
+
+  static async removeInstitutionUser(user_id, institution_id) {
+    let body = {
+      user_id: user_id,
+      institution_id: institution_id
+    };
+    const res = await axios.post(
+      `${api}/link-institution-users/delete/`,
+      body,
+      headers
+    );
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      throw new Error(`HTTP status ${res.status}`);
+    }
+  }
+
+    // DONATION-user
+    static async getDonationUser(user_id) {
+      const res = await axios.get(
+        `${api}/donation-users/?user_id=${user_id}`,
+        headers
+      );
+      if (res.status >= 200 && res.status <= 207) {
+        return res.data;
+      } else {
+        throw new Error(`HTTP status ${res.status}`);
+      }
+    }
 }
 
 export default Api;

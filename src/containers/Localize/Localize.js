@@ -11,10 +11,6 @@ import Grid from "@material-ui/core/Grid";
 
 import ModalDetailsInstitutions from "../../components/ModalDetailsInstitution";
 
-// import Button from "@material-ui/core/Button";
-// import IconCheck from "@material-ui/icons/Check";
-// import IconClose from "@material-ui/icons/Close";
-
 class Localize extends Component {
   state = {
     openModal: false,
@@ -30,15 +26,21 @@ class Localize extends Component {
     this.setState({ openModal: false });
   };
 
-  // handleSelectInstitution = async () => {
-  //   const { actions, history } = this.props;
-  //   await actions.postInstitutionUser();
-  //   history.push("/user");
-  // };
+  handleRegisterUserInstitution = (user_id, institution_id) => {
+    const { actions, history} = this.props;
+    actions.postUserInstitution(user_id, institution_id);
+    history.push("/user");
+  };
+ 
+  handleRegisterInstitutionUser = (user_id, institution_id) => {
+    const { actions, history} = this.props;
+    actions.postUserInstitution(user_id, institution_id);
+    history.push("/institution");
+  };
 
   render() {
     const { openModal, dataModal } = this.state;
-    const { institutions } = this.props;
+    const { institutions, user, userInstitution } = this.props;
 
     const options = {
       onRowClick: (rowData, rowState) => {
@@ -117,6 +119,10 @@ class Localize extends Component {
           openModal={openModal}
           dataModal={dataModal}
           onClose={this.handleCloseModal}
+          user={user}
+          registerUserInstitution={this.handleRegisterUserInstitution}
+          registerInstitutionUser={this.handleRegisterInstitutionUser}
+          userInstitution={userInstitution}
         />
       </div>
     );
@@ -127,14 +133,14 @@ Localize.propTypes = {
   actions: PropTypes.object,
   institutions: PropTypes.array,
   user: PropTypes.object,
-  reportInstitution: PropTypes.object
+  userInstitution: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
     institutions: state.home.institutions,
     user: state.login.user,
-    reportInstitution: state.user.reportInstitution
+    userInstitution: state.user.userInstitution
   };
 };
 
@@ -153,18 +159,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Localize);
-
-// withStyles(styles, { withTheme: true }(connect(mapStateToProps,mapDispatchToProps)(App))
-
-/* {user && user.role === "user" && (
-          <CardActions>
-            <Button
-              size="small"
-              color="primary"
-              onClick={this.handleSelectInstitution}
-            >
-              <IconCheck />
-              Cadastre-se
-            </Button>
-          </CardActions>
-        )} */

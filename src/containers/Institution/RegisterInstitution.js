@@ -159,11 +159,11 @@ class RegisterInstitution extends Component {
     return (
       <React.Fragment>
         <CssBaseline />
-
         <main className={classes.layout}>
+        <Typography variant="display1" gutterBottom>
+          Cadastrar Instituição
+        </Typography>
           <Paper className={classes.paper}>
-            <Typography variant="headline">  <span role="img" aria-label="aria-label">🏢</span>Cadastrar Instituição</Typography>
-
             <form className={classes.container} noValidate autoComplete="off">
               <TextField
                 fullWidth

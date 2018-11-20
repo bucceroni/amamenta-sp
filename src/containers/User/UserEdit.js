@@ -75,7 +75,7 @@ class UserEdit extends Component {
     district: this.props.user.district,
     postal_code: this.props.user.postal_code,
     // phone: this.props.user.phone,
-    birth_date: this.props.user.bith_date,
+    birth_date: this.props.user.bith_date
     // disabledCity: true
   };
 
@@ -111,7 +111,7 @@ class UserEdit extends Component {
       district,
       postal_code,
       // phone,
-      role_id,
+      role_id
       // email
       // password
     } = this.state;
@@ -129,17 +129,20 @@ class UserEdit extends Component {
       district,
       postal_code,
       // phone,
-      role_id,
+      role_id
       // email
       // password
     );
   };
 
   handleCloseSnackbar = async () => {
-    const { actions, history } = this.props;
+    const { user, actions, history } = this.props;
     await actions.closeSnackbarRegister();
-
-    history.push("/user");
+    if (user.role === "user") {
+      history.push("/user");
+    } else {
+      history.push("/institution");
+    }
   };
 
   render() {
@@ -156,7 +159,7 @@ class UserEdit extends Component {
       district,
       postal_code,
       // phone,
-      role_id,
+      role_id
       // email,
       // password,
       // disabledCity
@@ -439,7 +442,7 @@ UserEdit.propTypes = {
   // cities: PropTypes.array,
   roles: PropTypes.array,
   message: PropTypes.string,
-  openSnackbar: PropTypes.bool,
+  openSnackbar: PropTypes.bool
   // editUser: PropTypes.bool
 };
 
@@ -450,7 +453,7 @@ const mapStateToProps = state => {
     roles: state.home.roles,
     message: state.register.message,
     openSnackbar: state.register.openSnackbar,
-    user: state.login.user,
+    user: state.login.user
     // editUser: state.register.editUser
   };
 };
