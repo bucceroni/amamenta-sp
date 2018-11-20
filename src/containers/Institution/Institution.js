@@ -87,31 +87,46 @@ class Institution extends Component {
               </span>
             </Button>
           </Grid>
-          <Grid item xs={12}>
-            <Button color="primary" component={Link} to={`/institution/events`}>
-              <span role="img" aria-label="aria-label">
-                🎫 Cadastrar Eventos
-              </span>
-            </Button>
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              color="primary"
-              component={Link}
-              to={`/institution/donation`}
-            >
-              <span role="img" aria-label="aria-label">
-                🍼 Doações
-              </span>
-            </Button>
-          </Grid>
-          <Grid item xs={12}>
-            <Button color="primary" component={Link} to={`/institution/users`}>
-              <span role="img" aria-label="aria-label">
-                👶 Usuários Cadastrados
-              </span>
-            </Button>
-          </Grid>
+
+          {userInstitution.status === "APPROVED" && (
+            <Grid item xs={12}>
+              <Button
+                color="primary"
+                component={Link}
+                to={`/institution/events`}
+              >
+                <span role="img" aria-label="aria-label">
+                  🎫 Cadastrar Eventos
+                </span>
+              </Button>
+            </Grid>
+          )}
+          {userInstitution.status === "APPROVED" && (
+            <Grid item xs={12}>
+              <Button
+                color="primary"
+                component={Link}
+                to={`/institution/donation`}
+              >
+                <span role="img" aria-label="aria-label">
+                  🍼 Doações
+                </span>
+              </Button>
+            </Grid>
+          )}
+          {userInstitution.status === "APPROVED" && (
+            <Grid item xs={12}>
+              <Button
+                color="primary"
+                component={Link}
+                to={`/institution/users`}
+              >
+                <span role="img" aria-label="aria-label">
+                  👶 Usuários Cadastrados
+                </span>
+              </Button>
+            </Grid>
+          )}
           <Grid item xs={12}>
             <Button color="primary" component={Link} to={`/user/edit`}>
               <span role="img" aria-label="aria-label">

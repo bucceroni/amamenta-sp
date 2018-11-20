@@ -331,18 +331,28 @@ class Api {
     }
   }
 
-    // DONATION-user
-    static async getDonationUser(user_id) {
-      const res = await axios.get(
-        `${api}/donation-users/?user_id=${user_id}`,
-        headers
-      );
-      if (res.status >= 200 && res.status <= 207) {
-        return res.data;
-      } else {
-        throw new Error(`HTTP status ${res.status}`);
-      }
+  // DONATION-USER
+  static async getDonationUser(user_id) {
+    const res = await axios.get(
+      `${api}/donation-users/?user_id=${user_id}`,
+      headers
+    );
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      throw new Error(`HTTP status ${res.status}`);
     }
+  }
+
+  // Administrator
+  static async getAdministratorUsers() {
+    const res = await axios.get(`${api}/link-institution-users/`, headers);
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      throw new Error(`HTTP status ${res.status}`);
+    }
+  }
 }
 
 export default Api;

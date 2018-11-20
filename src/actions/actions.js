@@ -454,10 +454,9 @@ export function closeSnackbarInstitutionUser() {
   };
 }
 
-
 // Donation Users
 export function getDonationUser(user_id) {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch({
       type: types.GET_DONATION_USER,
       payload: await api.getDonationUser(user_id)
@@ -465,53 +464,61 @@ export function getDonationUser(user_id) {
   };
 }
 
-// export function approveInstitutionUser(user_id) {
-//   return async (dispatch, getState) => {
-//     let institution_id = getState().user.userInstitution.institution_id;
-//     let openSnackbar;
-//     let message;
-//     const res = await api.approveInstitutionUser(user_id, institution_id);
+// Administrator
+export function getAdministratorUsers() {
+  return async dispatch => {
+    dispatch({
+      type: types.GET_ADMINISTRATOR_USERS,
+      payload: await api.getAdministratorUsers()
+    });
+  };
+}
 
-//     if (typeof res === "string") {
-//       openSnackbar = true;
-//       message = "Usuário não pode ser aprovado";
-//     } else {
-//       openSnackbar = true;
-//       message = "Usuário aprovado com sucesso";
-//     }
-//     dispatch({
-//       type: types.APPROVE_INSTITUTION_USER,
-//       payload: { message, openSnackbar }
-//     });
-//   };
-// }
+export function approveAdministratorUsers(user_id, institution_id) {
+  return async dispatch => {
+    let openSnackbar;
+    let message;
+    const res = await api.approveInstitutionUser(user_id, institution_id);
 
-// export function removeInstitutionUser(user_id) {
-//   return async (dispatch, getState) => {
-//     let institution_id = getState().user.userInstitution.institution_id;
-//     let openSnackbar;
-//     let message;
-//     const res = await api.removeInstitutionUser(user_id, institution_id);
+    if (typeof res === "string") {
+      openSnackbar = true;
+      message = "Usuário não pode ser aprovado";
+    } else {
+      openSnackbar = true;
+      message = "Usuário aprovado com sucesso";
+    }
+    dispatch({
+      type: types.APPROVE_ADMINISTRATOR_USER,
+      payload: { message, openSnackbar }
+    });
+  };
+}
 
-//     if (typeof res === "string") {
-//       openSnackbar = true;
-//       message = "Usuário não pode ser excluído";
-//     } else {
-//       openSnackbar = true;
-//       message = "Usuário excluído com sucesso";
-//     }
-//     dispatch({
-//       type: types.REMOVE_INSTITUTION_USER,
-//       payload: { message, openSnackbar }
-//     });
-//   };
-// }
+export function removeAdministratorUsers(user_id, institution_id) {
+  return async dispatch => {
+    let openSnackbar;
+    let message;
+    const res = await api.removeInstitutionUser(user_id, institution_id);
 
-// export function closeSnackbarInstitutionUser() {
-//   return async dispatch => {
-//     dispatch({
-//       type: types.CLOSE_SNACKBAR_INSTITUTION_USER,
-//       payload: false
-//     });
-//   };
-// }
+    if (typeof res === "string") {
+      openSnackbar = true;
+      message = "Usuário não pode ser excluído";
+    } else {
+      openSnackbar = true;
+      message = "Usuário excluído com sucesso";
+    }
+    dispatch({
+      type: types.REMOVE_ADMINISTRATOR_USER,
+      payload: { message, openSnackbar }
+    });
+  };
+}
+
+export function closeSnackbarAdministratorUsers() {
+  return async dispatch => {
+    dispatch({
+      type: types.CLOSE_SNACKBAR_ADMINISTRATOR_USER,
+      payload: false
+    });
+  };
+}

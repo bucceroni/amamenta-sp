@@ -6,6 +6,7 @@ import login from "../reducers/LoginReducer";
 import user from "../reducers/UserReducer";
 import institution from "../reducers/InstitutionReducer";
 import event from "../reducers/EventReducer";
+import admin from "../reducers/AdministratorReducer";
 
 const rootReducer = combineReducers({
   home,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   login,
   user,
   institution,
-  event
+  event,
+  admin
 });
 
 export default rootReducer;
