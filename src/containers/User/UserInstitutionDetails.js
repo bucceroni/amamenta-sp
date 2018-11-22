@@ -11,7 +11,6 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { Paper } from "@material-ui/core";
 
-
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -30,8 +29,8 @@ class UserInstitutionDetails extends Component {
   }
 
   handleUnselectInstitution = () => {
-    const { actions } = this.props;
-    actions.deleteUserInstitution();
+    const { actions, user, userInstitution } = this.props;
+    actions.removeUserInstitution(user.user_id, userInstitution.insitution_id);
   };
 
   render() {
@@ -43,7 +42,7 @@ class UserInstitutionDetails extends Component {
           Instituição Cadastrada
         </Typography>
         <Grid container spacing={24}>
-        {userInstitution && userInstitution.status !== "PENDING" ? (
+          {userInstitution && userInstitution.status !== "PENDING" ? (
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <div>
@@ -70,8 +69,10 @@ class UserInstitutionDetails extends Component {
                 </div>
               </Paper>
             </Grid>
-          ) : <div>Aguarde... usuário ainda não autorizado pela instituição</div>}
-          
+          ) : (
+            <div>Aguarde... usuário ainda não autorizado pela instituição</div>
+          )}
+
           <Button color="primary" onClick={this.handleUnselectInstitution}>
             <span role="img" aria-label="aria-label">
               ❌ Deletar Institutição

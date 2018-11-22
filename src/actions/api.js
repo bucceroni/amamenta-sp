@@ -331,10 +331,39 @@ class Api {
     }
   }
 
-  // DONATION-USER
+  // Administrator
+  static async getAdministratorUsers() {
+    const res = await axios.get(`${api}/link-institution-users/`, headers);
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      throw new Error(`HTTP status ${res.status}`);
+    }
+  }
+
+  // Donation
+  static async getUnit() {
+    const res = await axios.get(`${api}/unit`, headers);
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      throw new Error(`HTTP status ${res.status}`);
+    }
+  }
+
+  static async getDonationType() {
+    const res = await axios.get(`${api}/donation-type-details`, headers);
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      throw new Error(`HTTP status ${res.status}`);
+    }
+  }
+
+  // Donation Users
   static async getDonationUser(user_id) {
     const res = await axios.get(
-      `${api}/donation-users/?user_id=${user_id}`,
+      `${api}/donations-user?user_id=${user_id}`,
       headers
     );
     if (res.status >= 200 && res.status <= 207) {
@@ -344,13 +373,30 @@ class Api {
     }
   }
 
-  // Administrator
-  static async getAdministratorUsers() {
-    const res = await axios.get(`${api}/link-institution-users/`, headers);
+  static async addDonationUser(
+    user_id,
+    amount_entry,
+    unit_id,
+    donation_type_id,
+    donation_type_details_id,
+    date_entry
+  ) {
+    let body = {
+      user_id: user_id,
+      amount_entry: amount_entry,
+      unit_id: unit_id,
+      donation_type_id: donation_type_id,
+      donation_type_details_id: donation_type_details_id,
+      date_entry: date_entry
+    };
+    const res = await axios
+      .post(`${api}/donations-user/`, body, headers)
+      .then(res => res)
+      .catch(error => error);
     if (res.status >= 200 && res.status <= 207) {
       return res.data;
     } else {
-      throw new Error(`HTTP status ${res.status}`);
+      return res.message;
     }
   }
 }

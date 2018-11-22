@@ -9,49 +9,58 @@ import { withStyles } from "@material-ui/core/styles";
 import MUIDataTable from "mui-datatables";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import { Snackbar, TextField, Button } from "@material-ui/core";
 
 // import ModalDetailsUsers from "../../components/ModalDetailsUsers";
 
 const styles = theme => ({});
 
 class UserDonation extends Component {
-  // state = {
-  //   openModal: false,
-  //   dataModal: {}
-  // };
+  state = {
+    // openModal: false,
+    // dataModal: {},
+    amount_entry: ""
+  };
 
   componentDidMount() {
     const { actions, user } = this.props;
-    actions.getDonationUser(user.user_id);
+    actions.getUnit();
+    actions.getDonationType();
+    actions.getDonationUser(99); //user.user_id);
   }
+
+  handleCloseSnackbar = () => {
+    const { actions } = this.props;
+    actions.closeSnackbarDonationUser();
+    this.setState({ amount_entry: "" });
+  };
+
+  handleChangeAmountEntry = prop => event => {
+    this.setState({ [prop]: event.target.value });
+  };
+
+  handleAddDonationUser = () => {
+    const { actions, user } = this.props;
+    const { amount_entry } = this.state;
+    actions.addDonationUser(99, amount_entry);
+  };
 
   // handleCloseModal = () => {
   //   this.setState({ openModal: false });
   // };
 
-  // handleApproveInstitutionUser = (user_id) => {
-  //   const { actions, history } = this.props;
-  //   actions.approveInstitutionUser(user_id);
-  //   history.push("/institution");
-  // };
-
-  // handleRemoveInstitutionUser = () => {
-  //   const { actions, history } = this.props;
-  //   actions.removeInstitutionUser();
-  //   history.push("/institution");
-  // };
-
   render() {
     // const { openModal, dataModal } = this.state;
-    const { donationUser } = this.props;
+    const { amount_entry } = this.state;
+    const { donationUser, openSnackbar, message } = this.props;
 
     const options = {
-      onRowClick: (rowData, rowState) => {
-        this.setState({
-          dataModal: donationUser[rowState.dataIndex],
-          openModal: true
-        });
-      },
+      // onRowClick: (rowData, rowState) => {
+      //   this.setState({
+      //     dataModal: donationUser[rowState.dataIndex],
+      //     openModal: true
+      //   });
+      // },
       textLabels: {
         body: {
           noMatch: "Nenhum resultado encontrado",
@@ -96,10 +105,35 @@ class UserDonation extends Component {
     return (
       <div>
         <Typography variant="display1" gutterBottom>
-          Usuários cadastrados
+          Doações
         </Typography>
 
-        {donationUser.length > 0 && (
+        <TextField
+          fullWidth
+          id="amount_entry"
+          label="Quantidade de Leite"
+          type="amount_entry"
+          margin="normal"
+          variant="outlined"
+          value={amount_entry}
+          onChange={this.handleChangeAmountEntry("amount_entry")}
+        />
+
+        <Button
+        fullWidth
+          styles={{ paddingBottom: "10px" }}
+          variant="contained"
+          size="large"
+          color="primary"
+          disabled={amount_entry === ""}
+          onClick={this.handleAddDonationUser}
+        >
+          Registrar retirada de Leite em ml
+        </Button>
+
+        <hr />
+
+        {donationUser && donationUser.length > 0 && (
           <Grid item xs={12}>
             <MUIDataTable
               title={
@@ -109,14 +143,12 @@ class UserDonation extends Component {
               }
               data={donationUser.map(item => {
                 return [
-                  item.name,
-                  item.email,
-                  item.city,
-                  item.district,
+                  item.amount_entry + item.unit_id_description,
+                  item.date_entry,
                   item.status === "PENDING" ? "Pendente" : "Aprovado"
                 ];
               })}
-              columns={["Nome", "Email", "Cidade", "Bairro", "Status"]}
+              columns={["Quantidade", "Data de entrada", "Status"]}
               options={options}
             />
           </Grid>
@@ -128,21 +160,38 @@ class UserDonation extends Component {
           onApprove={this.handleApproveInstitutionUser}
           onRemove={this.handleRemovenstitutionUser}
         /> */}
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={openSnackbar}
+          autoHideDuration={2000}
+          onClose={this.handleCloseSnackbar}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={<span id="message-id">{message}</span>}
+        />
       </div>
     );
   }
 }
 
-
 UserDonation.propTypes = {
   user: PropTypes.object,
-  donationUser: PropTypes.array
+  unit: PropTypes.array,
+  donationType: PropTypes.array,
+  donationUser: PropTypes.array,
+  message: PropTypes.string,
+  openSnackbar: PropTypes.bool
 };
 
 const mapStateToProps = state => {
   return {
     user: state.login.user,
-    donationUser: state.donationUser.donationUser
+    unit: state.donationUser.unit,
+    donationType: state.donationUser.donationType,
+    donationUser: state.donationUser.donationUser,
+    message: state.donationUser.message,
+    openSnackbar: state.donationUser.openSnackbar
   };
 };
 
@@ -161,4 +210,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles)(UserDonation));
-

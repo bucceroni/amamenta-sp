@@ -67,13 +67,16 @@ class User extends Component {
             </Grid>
           )}
 
-          <Grid item xs={12}>
-            <Button color="primary" component={Link} to={`/user/donation`}>
-              <span role="img" aria-label="aria-label">
-                🍼 Doações
-              </span>
-            </Button>
-          </Grid>
+          {userInstitution.status === "APPROVED" && (
+            <Grid item xs={12}>
+              <Button color="primary" component={Link} to={`/user/donation`}>
+                <span role="img" aria-label="aria-label">
+                  🍼 Doações
+                </span>
+              </Button>
+            </Grid>
+          )}
+
           <Grid item xs={12}>
             <Button color="primary" component={Link} to={`/user/edit`}>
               <span role="img" aria-label="aria-label">

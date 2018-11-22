@@ -454,16 +454,6 @@ export function closeSnackbarInstitutionUser() {
   };
 }
 
-// Donation Users
-export function getDonationUser(user_id) {
-  return async dispatch => {
-    dispatch({
-      type: types.GET_DONATION_USER,
-      payload: await api.getDonationUser(user_id)
-    });
-  };
-}
-
 // Administrator
 export function getAdministratorUsers() {
   return async dispatch => {
@@ -518,6 +508,82 @@ export function closeSnackbarAdministratorUsers() {
   return async dispatch => {
     dispatch({
       type: types.CLOSE_SNACKBAR_ADMINISTRATOR_USER,
+      payload: false
+    });
+  };
+}
+
+// Donation unit - type
+export function getUnit() {
+  return async dispatch => {
+    dispatch({
+      type: types.GET_UNIT,
+      payload: await api.getUnit()
+    });
+  };
+}
+
+export function getDonationType() {
+  return async dispatch => {
+    dispatch({
+      type: types.GET_DONATION_TYPE,
+      payload: await api.getDonationType()
+    });
+  };
+}
+
+// Donation Users
+export function getDonationUser(user_id) {
+  return async dispatch => {
+    dispatch({
+      type: types.GET_DONATION_USER,
+      payload: await api.getDonationUser(user_id)
+    });
+  };
+}
+
+export function addDonationUser(user_id, amount_entry) {
+  return async (dispatch, getState) => {
+    let unit_id = 1;
+    let doantion_type_id = 0;
+    let donation_type_details_id = 1;
+    let date_entry = `${new Date().toLocaleDateString(
+      "pt-BR"
+    )} ${new Date().getHours()}:${new Date().getMinutes()}`;
+
+    let openSnackbar;
+    let message;
+    let donationUser = getState().donationUser.donationUser;
+
+    const res = await api.addDonationUser(
+      user_id,
+      amount_entry,
+      unit_id,
+      doantion_type_id,
+      donation_type_details_id,
+      date_entry
+    );
+
+    if (typeof res === "string") {
+      openSnackbar = true;
+      message = "Doação inválida";
+    } else {
+      donationUser.push(res);
+      openSnackbar = true;
+      message = "Doação cadastrada com sucesso";
+    }
+
+    dispatch({
+      type: types.ADD_DONATION_USER,
+      payload: { openSnackbar, message, donationUser }
+    });
+  };
+}
+
+export function closeSnackbarDonationUser() {
+  return async dispatch => {
+    dispatch({
+      type: types.CLOSE_SNACKBAR_DONATION_USER,
       payload: false
     });
   };
