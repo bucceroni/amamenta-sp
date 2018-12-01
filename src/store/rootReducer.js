@@ -8,6 +8,7 @@ import institution from "../reducers/InstitutionReducer";
 import event from "../reducers/EventReducer";
 import admin from "../reducers/AdministratorReducer";
 import donationUser from "../reducers/DonationUserReducer";
+import donationInstitution from "../reducers/DonationInstitutionReducer";
 
 const rootReducer = combineReducers({
   home,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   institution,
   event,
   admin,
-  donationUser
+  donationUser,
+  donationInstitution
 });
 
 export default rootReducer;

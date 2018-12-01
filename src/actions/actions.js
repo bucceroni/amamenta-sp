@@ -588,3 +588,116 @@ export function closeSnackbarDonationUser() {
     });
   };
 }
+
+//Donation Institution
+export function getDonationInstitution(institution_id) {
+  return async dispatch => {
+    dispatch({
+      type: types.GET_DONATION_INSTITUTION,
+      payload: await api.getDonationInstitution(institution_id)
+    });
+  };
+}
+
+export function postDonationsInstitutionWait(
+  donation_user_id,
+  institution_id,
+  indexId
+) {
+  return async (dispatch, getState) => {
+    let openSnackbar;
+    let message;
+    let donationInstitution = getState().donationInstitution
+      .donationInstitution;
+
+    const res = await api.postDonationsInstitutionWait(
+      donation_user_id,
+      institution_id
+    );
+
+    if (res.name) {
+      donationInstitution.push(res);
+      openSnackbar = true;
+      message = "Aguardar retirada";
+    } else {
+      openSnackbar = true;
+      message = "Registro inválido";
+    }
+
+    dispatch({
+      type: types.POST_DONATION_WAIT,
+      payload: { openSnackbar, message, donationInstitution }
+    });
+  };
+}
+
+export function postDonationsInstitutionWithDraw(
+  donation_user_id,
+  institution_id
+) {
+  return async (dispatch, getState) => {
+    let openSnackbar;
+    let message;
+    let donationInstitution = getState().donationInstitution
+      .donationInstitution;
+    let date_withdraw = `${new Date().toLocaleDateString(
+      "pt-BR"
+    )} ${new Date().getHours()}:${new Date().getMinutes()}`;
+
+    const res = await api.postDonationsInstitutionWithDraw(
+      donation_user_id,
+      institution_id,
+      date_withdraw
+    );
+
+    if (res.name) {
+      donationInstitution.push(res);
+      openSnackbar = true;
+      message = "Estoque disponível atualizado";
+    } else {
+      openSnackbar = true;
+      message = "Registro inválido";
+    }
+
+    dispatch({
+      type: types.POST_DONATION_WITHDRAW,
+      payload: { openSnackbar, message, donationInstitution }
+    });
+  };
+}
+
+export function closeSnackbarDonationInstitution() {
+  return async dispatch => {
+    dispatch({
+      type: types.CLOSE_SNACKBAR_DONATION_INSTITUTION,
+      payload: false
+    });
+  };
+}
+
+// Stock Institution
+export function getStockInstitution(institution_id) {
+  return async dispatch => {
+    let donation_type_id = 0;
+    dispatch({
+      type: types.GET_STOCK_INSTITUTION,
+      payload: await api.getStockInstitution(donation_type_id, institution_id)
+    });
+  };
+}
+export function postStockInstitution(amount_out, institution_balance_id){
+  return async (dispatch) => {
+    let date_out = `${new Date().toLocaleDateString(
+      "pt-BR"
+    )} ${new Date().getHours()}:${new Date().getMinutes()}`;
+
+    dispatch({
+      type: types.POST_STOCK_INSTITUTION,
+      payload: await api.postStockInstitution(
+        institution_balance_id,
+        date_out,
+        amount_out
+      )
+    });
+  };
+}

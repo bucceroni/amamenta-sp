@@ -85,8 +85,8 @@ class Localize extends Component {
       print: true,
       download: true,
       downloadOptions: { filename: "Instituições.csv", separator: "," },
-      filter: true,
-      viewColumns: true,
+      filter: false,
+      viewColumns: false,
       selectableRows: false
     };
 

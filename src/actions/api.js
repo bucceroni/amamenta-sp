@@ -399,6 +399,88 @@ class Api {
       return res.message;
     }
   }
+
+  // Donation Institutions
+  static async getDonationInstitution(institution_id) {
+    const res = await axios.get(
+      `${api}/donations-institution/?institution_id=${institution_id}`,
+      headers
+    );
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      throw new Error(`HTTP status ${res.status}`);
+    }
+  }
+
+  static async postDonationsInstitutionWait(donation_user_id, institution_id) {
+    let body = {
+      donation_user_id: donation_user_id,
+      institution_id: institution_id
+    };
+    const res = await axios.post(
+      `${api}/donations-institution/`,
+      body,
+      headers
+    );
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      return null;
+    }
+  }
+
+  static async postDonationsInstitutionWithDraw(
+    donation_user_id,
+    institution_id,
+    date_withdraw
+  ) {
+    let body = {
+      donation_user_id: donation_user_id,
+      institution_id: institution_id,
+      date_withdraw: date_withdraw
+    };
+    const res = await axios.post(
+      `${api}/donations-institution/withdraw/`,
+      body,
+      headers
+    );
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      return null;
+    }
+  }
+
+  static async getStockInstitution(donation_type_id, institution_id) {
+    const res = await axios.get(
+      `${api}/stock/?donation_type_id=${donation_type_id}&institution_id=${institution_id}`,
+      headers
+    );
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      throw new Error(`HTTP status ${res.status}`);
+    }
+  }
+
+  static async postStockInstitution(
+    institution_balance_id,
+    date_out,
+    amount_out
+  ) {
+    let body = {
+      institution_balance_id: institution_balance_id,
+      date_out: date_out,
+      amount_out: amount_out
+    };
+    const res = await axios.post(`${api}/stock/`, body, headers);
+    if (res.status >= 200 && res.status <= 207) {
+      return res.data;
+    } else {
+      return null;
+    }
+  }
 }
 
 export default Api;

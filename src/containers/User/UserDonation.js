@@ -26,7 +26,7 @@ class UserDonation extends Component {
     const { actions, user } = this.props;
     actions.getUnit();
     actions.getDonationType();
-    actions.getDonationUser(99); //user.user_id);
+    actions.getDonationUser(user.user_id);
   }
 
   handleCloseSnackbar = () => {
@@ -42,7 +42,7 @@ class UserDonation extends Component {
   handleAddDonationUser = () => {
     const { actions, user } = this.props;
     const { amount_entry } = this.state;
-    actions.addDonationUser(99, amount_entry);
+    actions.addDonationUser(user.user_id, amount_entry);
   };
 
   // handleCloseModal = () => {
