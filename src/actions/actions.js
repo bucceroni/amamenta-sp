@@ -607,6 +607,7 @@ export function postDonationsInstitutionWait(
   return async (dispatch, getState) => {
     let openSnackbar;
     let message;
+    let itemArray
     let donationInstitution = getState().donationInstitution
       .donationInstitution;
 
@@ -616,9 +617,11 @@ export function postDonationsInstitutionWait(
     );
 
     if (res.name) {
-      donationInstitution.push(res);
+      itemArray = donationInstitution.find(item => item.donation_user_id === res.donation_user_id);
+      donationInstitution = donationInstitution.filter(item => item.donation_user_id !== itemArray.donation_user_id)
       openSnackbar = true;
       message = "Aguardar retirada";
+      donationInstitution.push(res)
     } else {
       openSnackbar = true;
       message = "Registro inválido";
@@ -638,6 +641,8 @@ export function postDonationsInstitutionWithDraw(
   return async (dispatch, getState) => {
     let openSnackbar;
     let message;
+    let itemArray
+    let institution_id_stock
     let donationInstitution = getState().donationInstitution
       .donationInstitution;
     let date_withdraw = `${new Date().toLocaleDateString(
@@ -651,9 +656,13 @@ export function postDonationsInstitutionWithDraw(
     );
 
     if (res.name) {
-      donationInstitution.push(res);
+      itemArray = donationInstitution.find(item => item.donation_user_id === res.donation_user_id);
+      donationInstitution = donationInstitution.filter(item => item.donation_user_id !== itemArray.donation_user_id)
+      institution_id_stock = getState().user.userInstitution.institution_id;
       openSnackbar = true;
       message = "Estoque disponível atualizado";
+      donationInstitution.push(res);
+      this.getStockInstitution(institution_id_stock)
     } else {
       openSnackbar = true;
       message = "Registro inválido";
@@ -685,18 +694,19 @@ export function getStockInstitution(institution_id) {
     });
   };
 }
-export function postStockInstitution(amount_out, institution_balance_id){
-  return async (dispatch) => {
+export function postStockInstitution(amount_out, institution_balance_id) {
+  return async dispatch => {
     let date_out = `${new Date().toLocaleDateString(
       "pt-BR"
     )} ${new Date().getHours()}:${new Date().getMinutes()}`;
+    let amount = parseInt(amount_out)
 
     dispatch({
       type: types.POST_STOCK_INSTITUTION,
       payload: await api.postStockInstitution(
         institution_balance_id,
         date_out,
-        amount_out
+        amount
       )
     });
   };

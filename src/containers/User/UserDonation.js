@@ -97,8 +97,8 @@ class UserDonation extends Component {
       print: true,
       download: true,
       downloadOptions: { filename: "Doações.csv", separator: "," },
-      filter: true,
-      viewColumns: true,
+      filter: false,
+      viewColumns: false,
       selectableRows: false
     };
 

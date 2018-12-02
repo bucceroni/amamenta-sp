@@ -8,16 +8,16 @@ import * as actions from "../../actions/actions";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import { Button, Snackbar } from "@material-ui/core";
+import { Button, Snackbar, TextField } from "@material-ui/core";
 
 import MUIDataTable from "mui-datatables";
 
 const styles = theme => ({});
 
 class InstitutionDonation extends Component {
-  state={
-    amount_out: 100
-  }
+  state = {
+    amount_out: ""
+  };
   componentDidMount() {
     const { actions, userInstitution } = this.props;
     actions.getDonationInstitution(userInstitution.institution_id);
@@ -41,9 +41,14 @@ class InstitutionDonation extends Component {
     );
   };
 
+  handleChangeAmountOut = prop => event => {
+    this.setState({ [prop]: event.target.value });
+  };
+
   handleSubmit = (amount_out, institution_balance_id) => {
     const { actions } = this.props;
-    actions.postStockInstitution(amount_out, institution_balance_id)
+    actions.postStockInstitution(amount_out, institution_balance_id);
+    this.setState({amount_out: ""})
   };
 
   handleCloseSnackbar = () => {
@@ -52,7 +57,13 @@ class InstitutionDonation extends Component {
   };
 
   render() {
-    const { donationInstitution, openSnackbar, message, stockInstitution } = this.props;
+    const { amount_out } = this.state;
+    const {
+      donationInstitution,
+      openSnackbar,
+      message,
+      stockInstitution
+    } = this.props;
     const options = {
       textLabels: {
         body: {
@@ -80,7 +91,7 @@ class InstitutionDonation extends Component {
       caseSensitive: false,
       fixedHeader: true,
       pagination: true,
-      rowsPerPage: 25,
+      rowsPerPage: 10,
       resizableColumns: false,
       rowHover: true,
       sortFilterList: true,
@@ -100,8 +111,9 @@ class InstitutionDonation extends Component {
         <Typography variant="display1" gutterBottom>
           Doações - Institutição
         </Typography>
-        <Typography variant="display1" gutterBottom>
-          AGENDAR
+        <br />
+        <Typography variant="display6" gutterBottom>
+          Estoque disponível dos doadores
         </Typography>
         {donationInstitution && donationInstitution.length > 0 && (
           <Grid item xs={12}>
@@ -112,7 +124,7 @@ class InstitutionDonation extends Component {
                 </Typography>
               }
               data={donationInstitution
-                .filter((item) => item.status === "PENDING")
+                .filter(item => item.status === "PENDING")
                 .map((item, index) => {
                   return [
                     item.amount_entry + item.unit,
@@ -120,9 +132,11 @@ class InstitutionDonation extends Component {
                     item.name,
                     <Button
                       color="primary"
-                      onClick={() => this.handleWait(item.donation_user_id, index)}
+                      onClick={() =>
+                        this.handleWait(item.donation_user_id, index)
+                      }
                     >
-                      Agendar
+                      Reservar
                     </Button>
                   ];
                 })}
@@ -137,11 +151,11 @@ class InstitutionDonation extends Component {
           </Grid>
         )}
         <br />
+        <Typography variant="display6" gutterBottom>
+          Doações reservadas
+        </Typography>
         {donationInstitution && donationInstitution.length > 0 && (
           <Grid item xs={12}>
-            <Typography variant="display1" gutterBottom>
-              AGUARDAR RETIRADA
-            </Typography>
             <MUIDataTable
               title={
                 <Typography variant="subheading" gutterBottom>
@@ -159,7 +173,7 @@ class InstitutionDonation extends Component {
                       color="primary"
                       onClick={() => this.handleWithDraw(item.donation_user_id)}
                     >
-                      Retirado
+                      Disponível para doação
                     </Button>
                   ];
                 })}
@@ -169,13 +183,36 @@ class InstitutionDonation extends Component {
           </Grid>
         )}
         <br />
-        <Typography variant="display1" gutterBottom>
-          {`ESTOQUE DISPONÍVEL =${stockInstitution.amount_available}ml`}
+
+        <Typography variant="title" gutterBottom>
+          {`Estoque disponível para doação: ${
+            stockInstitution.amount_available
+          }ml`}
         </Typography>
 
-        <Button onClick={() => this.handleSubmit(this.state.amount_out, stockInstitution.institution_balance_id)}>Retirar do Estoque disponível</Button>
+        <TextField
+          fullWidth
+          id="amount_out"
+          label="Quantidade de Leite ml"
+          margin="normal"
+          variant="outlined"
+          value={amount_out}
+          onChange={this.handleChangeAmountOut("amount_out")}
+        />
 
-        
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={() =>
+            this.handleSubmit(
+              amount_out,
+              stockInstitution.institution_balance_id
+            )
+          }
+        >
+          Doar
+        </Button>
 
         <Snackbar
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -187,11 +224,6 @@ class InstitutionDonation extends Component {
           }}
           message={<span id="message-id">{message}</span>}
         />
-        {/* <Button color="primary" onClick={this.handleUnselectInstitution}>
-              <span role="img" aria-label="aria-label">
-                ❌ Deletar Institutição
-              </span>
-            </Button> */}
       </div>
     );
   }

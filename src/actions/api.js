@@ -472,7 +472,7 @@ class Api {
     let body = {
       institution_balance_id: institution_balance_id,
       date_out: date_out,
-      amount_out: amount_out
+      amount_out: parseInt(amount_out)
     };
     const res = await axios.post(`${api}/stock/`, body, headers);
     if (res.status >= 200 && res.status <= 207) {
